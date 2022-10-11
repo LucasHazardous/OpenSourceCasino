@@ -9,7 +9,8 @@ import NavBar from './components/NavBar.vue';
 export default {
   data() {
     return {
-      points: 1000000
+      points: 1000000,
+      games: ["Slots"]
     }
   }
 }
@@ -20,7 +21,7 @@ export default {
     <NavBar :points="points" />
   </header>
 
-  <RouterView />
+  <RouterView :games="games" />
   
 </template>
 
