@@ -1,5 +1,20 @@
+<script>
+export default {
+    data() {
+        return {
+            buttonSound: new Audio("spin.mp3")
+        }
+    },
+    methods: {
+        playButtonSound() {
+            this.buttonSound.play();
+        }
+    }
+}
+</script>
+
 <template>
-    <button class="spinButton">
+    <button class="spinButton" @click="playButtonSound">
         <span class="spinButtonInside">
             <slot></slot>
         </span>
