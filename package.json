@@ -1,11 +1,13 @@
 {
   "name": "opensourcecasino",
   "version": "0.0.0",
+  "type": "module",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview --port 4173",
-    "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs --fix --ignore-path .gitignore"
+    "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs --fix --ignore-path .gitignore",
+    "deploy": "node scripts/deploy-gp.js"
   },
   "dependencies": {
     "vue": "^3.2.38",
@@ -17,6 +19,7 @@
     "@vue/eslint-config-prettier": "^7.0.0",
     "eslint": "^8.22.0",
     "eslint-plugin-vue": "^9.3.0",
+    "execa": "^6.1.0",
     "prettier": "^2.7.1",
     "vite": "^3.0.9"
   }
