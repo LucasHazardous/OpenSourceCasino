@@ -10,7 +10,9 @@ export default {
             slotSpinTimes: 10,
             slotAmount: 3,
             spinning: false,
-            slotBets: [5000, 10000, 20000]
+            slotBets: [5000, 10000, 20000],
+            goodSlotValues: ["$", "7"],
+            lastPlacedBet: 0
         };
     },
     components: { Slot, SlotButton, BetSelectButton },
@@ -18,6 +20,7 @@ export default {
         spinSlots(slotCounter, rewards=[]) {
             if(slotCounter == 1) {
                 if(this.spinning) return;
+                this.lastPlacedBet = Number(this.$refs.betSelect.$data.value);
                 this.$emit("changePoints", -Number(this.$refs.betSelect.$data.value));
             }
             else if (slotCounter > this.slotAmount) {
@@ -35,7 +38,12 @@ export default {
 
         },
         calculateReward(rewards) {
-            console.log(rewards);
+            const setRewards = new Set(rewards);
+            if(!setRewards.has(...this.goodSlotValues)) return;
+            if(setRewards.size === 1) this.broadcastRewards(2*this.lastPlacedBet);
+        },
+        broadcastRewards(rewards) {
+            this.$emit("changePoints", rewards);
         }
     }
 }
