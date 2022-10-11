@@ -19,7 +19,7 @@ const tmpBranchName = "gh-pages";
 
         console.log("Clean up");
         await execa("git", ["checkout", "-f", "main"]);
-        await execa("git", ["branch", "-d", tmpBranchName]);
+        await execa("git", ["branch", "-D", tmpBranchName]);
 
         console.log("Finished");
     } catch (err) {
