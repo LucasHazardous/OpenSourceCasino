@@ -12,7 +12,8 @@ export default {
             spinning: false,
             slotBets: [5000, 10000, 20000],
             goodSlotValues: ["$", "7"],
-            lastPlacedBet: 0
+            lastPlacedBet: 0,
+            lastReward: 0
         };
     },
     components: { Slot, SlotButton, BetSelectButton },
@@ -39,8 +40,11 @@ export default {
         },
         calculateReward(rewards) {
             const setRewards = new Set(rewards);
-            if(!setRewards.has(...this.goodSlotValues)) return;
-            if(setRewards.size === 1) this.broadcastRewards(2*this.lastPlacedBet);
+            let finalReward = 0;
+            if(setRewards.size === 1 && setRewards.has(...this.goodSlotValues)) finalReward = this.lastPlacedBet*2;
+
+            this.lastReward = finalReward;
+            this.broadcastRewards(finalReward);
         },
         broadcastRewards(rewards) {
             this.$emit("changePoints", rewards);
@@ -51,6 +55,7 @@ export default {
 
 <template>
     <main>
+        <p id="lastReward">Last reward: {{ lastReward }}</p>
         <div id="slotSpace">
             <Slot v-for="i in slotAmount" :ref="String('slot' + i)" class="slot"></Slot>
         </div>
@@ -65,6 +70,11 @@ export default {
 <style scoped>
 main {
     text-align: center;
+}
+
+#lastReward {
+    margin-top: 1%;
+    color: aquamarine;
 }
 
 #slotSpace {
