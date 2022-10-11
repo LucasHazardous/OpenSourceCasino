@@ -2,11 +2,14 @@
   padding: 0;
   margin: 0;
   font-family: Verdana, sans-serif;
-  background-color: #1f1f1f;
   -webkit-touch-callout: none;
   -webkit-user-select: none;
   -khtml-user-select: none;
   -moz-user-select: none;
   -ms-user-select: none;
   user-select: none;
+}
+
+html, body {
+  background-color: #1f1f1f;
 }
