@@ -12,6 +12,11 @@ export default {
       points: 1000000,
       games: ["Slots"]
     }
+  },
+  methods: {
+    changePoints(x) {
+      this.points += x;
+    }
   }
 }
 </script>
@@ -21,7 +26,7 @@ export default {
     <NavBar :points="points" />
   </header>
 
-  <RouterView :games="games" />
+  <RouterView :games="games" @changePoints="changePoints" />
   
 </template>
 
