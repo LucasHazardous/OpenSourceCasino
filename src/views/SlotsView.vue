@@ -1,5 +1,6 @@
 <script>
 import Slot from "../components/Slot.vue";
+import SlotButton from "../components/SlotButton.vue";
 
 export default {
     data() {
@@ -10,7 +11,7 @@ export default {
             spinning: false
         };
     },
-    components: { Slot },
+    components: { Slot, SlotButton },
     methods: {
         spinSlots(slotCounter) {
             if(slotCounter == 1 && this.spinning) return;
@@ -30,11 +31,7 @@ export default {
         <div id="slotSpace">
             <Slot v-for="i in slotAmount" :ref="String('slot' + i)" class="slot"></Slot>
         </div>
-        <button class="spinButton" @click="spinSlots(1)">
-            <span class="spinButtonInside">
-                Spin
-            </span>
-        </button>
+        <SlotButton @click="spinSlots(1)">Slot</SlotButton>
     </main>
 </template>
 
@@ -54,29 +51,5 @@ main {
     display: inline-block;
     padding: 10%;
     margin: 1%;
-}
-
-.spinButton {
-    margin-top: 10%;
-    background: hsl(340deg 100% 32%);
-    border-radius: 12px;
-    border: none;
-    padding: 0;
-    cursor: pointer;
-    outline-offset: 4px;
-}
-
-.spinButtonInside {
-    display: block;
-    padding: 10% 3.5rem;
-    border-radius: 1rem;
-    font-size: 140%;
-    background: #f00068;
-    color: azure;
-    transform: translateY(-6px);
-}
-
-.spinButton:active .spinButtonInside:active {
-    transform: translateY(-2px);
 }
 </style>
