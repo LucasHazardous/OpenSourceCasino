@@ -8,7 +8,6 @@
 
 <style scoped>
 .spinButton {
-    margin-top: 10%;
     background: #a40037;
     border-radius: 12px;
     border: none;

@@ -15,7 +15,7 @@ export default {
                 function spinRec() {
                     if (spinCount <= 0) {
                         slotValueElement.style.border = "3px solid #000000";
-                        return resolve();
+                        return resolve(slotValueElement.innerText);
                     }
                     slotValueElement.innerText = slotValues[Math.floor(Math.random() * slotValues.length)];
                     setTimeout(spinRec, 200, --spinCount);
