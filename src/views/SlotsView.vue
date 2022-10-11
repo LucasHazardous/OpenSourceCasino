@@ -13,7 +13,8 @@ export default {
             slotBets: [5000, 10000, 20000],
             goodSlotValues: ["$", "7"],
             lastPlacedBet: 0,
-            lastReward: 0
+            lastReward: 0,
+            buttonPresent: true
         };
     },
     components: { Slot, SlotButton, BetSelectButton },
@@ -21,12 +22,14 @@ export default {
         spinSlots(slotCounter, rewards=[]) {
             if(slotCounter == 1) {
                 if(this.spinning) return;
+                this.buttonPresent = false;
                 this.lastPlacedBet = Number(this.$refs.betSelect.$data.value);
                 this.$emit("changePoints", -Number(this.$refs.betSelect.$data.value));
             }
             else if (slotCounter > this.slotAmount) {
                 this.spinning = false;
                 this.calculateReward(rewards);
+                this.buttonPresent = true;
                 return;
             }
 
@@ -61,7 +64,7 @@ export default {
         </div>
         <div id="options">
             <BetSelectButton :bets="slotBets" id="betSelect" ref="betSelect"></BetSelectButton>
-            <SlotButton @click="spinSlots(1)">Spin</SlotButton>
+            <SlotButton v-if="buttonPresent" @click="spinSlots(1)">Spin</SlotButton>
         </div>
         
     </main>
