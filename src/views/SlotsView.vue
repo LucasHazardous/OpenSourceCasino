@@ -1,6 +1,7 @@
 <script>
-import Slot from "../components/Slot.vue";
-import SlotButton from "../components/SlotButton.vue";
+import Slot from "../components/Slots/Slot.vue";
+import SlotButton from "../components/Slots/SlotButton.vue";
+import BetSelectButton from "../components/BetSelectButton.vue";
 
 export default {
     data() {
@@ -8,19 +9,33 @@ export default {
             amountWon: 0,
             slotSpinTimes: 10,
             slotAmount: 3,
-            spinning: false
+            spinning: false,
+            slotBets: [5000, 10000, 20000]
         };
     },
-    components: { Slot, SlotButton },
+    components: { Slot, SlotButton, BetSelectButton },
     methods: {
-        spinSlots(slotCounter) {
-            if(slotCounter == 1 && this.spinning) return;
-            if (slotCounter > this.slotAmount) {
+        spinSlots(slotCounter, rewards=[]) {
+            if(slotCounter == 1) {
+                if(this.spinning) return;
+                this.$emit("changePoints", -Number(this.$refs.betSelect.$data.value));
+            }
+            else if (slotCounter > this.slotAmount) {
                 this.spinning = false;
+                this.calculateReward(rewards);
                 return;
             }
+
             this.spinning = true;
-            this.$refs['slot' + slotCounter][0].spin(this.slotSpinTimes).then(res => this.spinSlots(slotCounter + 1));
+            this.$refs['slot' + slotCounter][0].spin(this.slotSpinTimes).then(res => {
+                rewards.push(res);
+                this.spinSlots(slotCounter + 1, rewards);
+            });
+
+
+        },
+        calculateReward(rewards) {
+            console.log(rewards);
         }
     }
 }
@@ -31,7 +46,11 @@ export default {
         <div id="slotSpace">
             <Slot v-for="i in slotAmount" :ref="String('slot' + i)" class="slot"></Slot>
         </div>
-        <SlotButton @click="spinSlots(1)">Slot</SlotButton>
+        <div id="options">
+            <BetSelectButton :bets="slotBets" id="betSelect" ref="betSelect"></BetSelectButton>
+            <SlotButton @click="spinSlots(1)">Spin</SlotButton>
+        </div>
+        
     </main>
 </template>
 
@@ -51,5 +70,19 @@ main {
     display: inline-block;
     padding: 10%;
     margin: 1%;
+}
+
+#options {
+    margin-top: 10%;
+    position: relative;
+}
+
+BetSelectButton {
+    position: absolute;
+}
+
+#betSelect {
+    display: flex;
+    margin-left: 5%;
 }
 </style>
