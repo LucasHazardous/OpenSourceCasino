@@ -2,6 +2,7 @@
 import Slot from "../components/Slot.vue";
 import PlayButton from "../components/PlayButton.vue";
 import BetSelectButton from "../components/BetSelectButton.vue";
+import InfoSection from "../components/InfoSection.vue";
 
 export default {
     data() {
@@ -11,17 +12,18 @@ export default {
             slotAmount: 3,
             spinning: false,
             slotBets: [5000, 10000, 20000],
+            slotValues: ["$", "0", "7", "-", "="],
             goodSlotValues: ["$", "7"],
             lastPlacedBet: 0,
             lastReward: 0,
             buttonPresent: true
         };
     },
-    components: { Slot, PlayButton, BetSelectButton },
+    components: { Slot, PlayButton, BetSelectButton, InfoSection },
     methods: {
-        spinSlots(slotCounter, rewards=[]) {
-            if(slotCounter == 1) {
-                if(this.spinning) return;
+        spinSlots(slotCounter, rewards = []) {
+            if (slotCounter == 1) {
+                if (this.spinning) return;
                 this.buttonPresent = false;
                 this.lastPlacedBet = Number(this.$refs.betSelect.$data.value);
                 this.$emit("changePoints", -Number(this.$refs.betSelect.$data.value));
@@ -44,7 +46,18 @@ export default {
         calculateReward(rewards) {
             const rewardsSet = new Set(rewards);
             let finalReward = 0;
-            if(rewardsSet.size === 1 && this.hasGoodSlotValue(rewardsSet)) finalReward = this.lastPlacedBet*2;
+            if (this.hasGoodSlotValue(rewardsSet)) {
+                if (rewardsSet.size === 1) {
+                    switch ([...rewardsSet][0]) {
+                        case "7":
+                            finalReward = this.lastPlacedBet * 7;
+                            break;
+                        case "$":
+                            finalReward = this.lastPlacedBet * 5;
+                            break;
+                    }
+                }
+            }
 
             this.lastReward = finalReward;
             this.$emit("changePoints", finalReward);
@@ -52,7 +65,7 @@ export default {
         hasGoodSlotValue(rewardsSet) {
             let res = false;
             this.goodSlotValues.forEach(goodSlotValue => {
-                if(rewardsSet.has(goodSlotValue)) res = true;
+                if (rewardsSet.has(goodSlotValue)) res = true;
             });
             return res;
         }
@@ -64,13 +77,33 @@ export default {
     <main>
         <p id="lastReward">Last reward: {{ lastReward }}</p>
         <div id="slotSpace">
-            <Slot v-for="i in slotAmount" :ref="String('slot' + i)" class="slot"></Slot>
+            <Slot v-for="i in slotAmount" :slotValues="slotValues" :ref="String('slot' + i)" class="slot"></Slot>
         </div>
         <div id="options">
             <BetSelectButton :bets="slotBets" id="betSelect" ref="betSelect"></BetSelectButton>
             <PlayButton v-if="buttonPresent" @click="spinSlots(1)">Spin</PlayButton>
         </div>
-        
+
+        <InfoSection>
+            <h2>Loot table</h2>
+            <table>
+                <tr>
+                    <th>Result</th>
+                    <th>Theoretical Chance</th>
+                    <th>Reward</th>
+                </tr>
+                <tr>
+                    <td>$$$</td>
+                    <td>{{ 1/Math.pow(this.slotValues.length, this.slotAmount)*100 }}%</td>
+                    <td>original bet x 5</td>
+                </tr>
+                <tr>
+                    <td>777</td>
+                    <td>{{ 1/Math.pow(this.slotValues.length, this.slotAmount)*100 }}%</td>
+                    <td>original bet x 7</td>
+                </tr>
+            </table>
+        </InfoSection>
     </main>
 </template>
 
@@ -109,5 +142,21 @@ BetSelectButton {
 #betSelect {
     display: flex;
     margin-left: 5%;
+}
+
+table {
+    border-collapse: collapse;
+    width: 100%;
+}
+
+td,
+th {
+    border: 1px solid black;
+    text-align: left;
+    padding: 0.5rem;
+}
+
+tr:nth-child(even) {
+    background-color: azure;
 }
 </style>
