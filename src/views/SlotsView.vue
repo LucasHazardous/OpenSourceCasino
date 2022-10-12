@@ -1,6 +1,6 @@
 <script>
-import Slot from "../components/Slots/Slot.vue";
-import SlotButton from "../components/Slots/SlotButton.vue";
+import Slot from "../components/Slot.vue";
+import PlayButton from "../components/PlayButton.vue";
 import BetSelectButton from "../components/BetSelectButton.vue";
 
 export default {
@@ -17,7 +17,7 @@ export default {
             buttonPresent: true
         };
     },
-    components: { Slot, SlotButton, BetSelectButton },
+    components: { Slot, PlayButton, BetSelectButton },
     methods: {
         spinSlots(slotCounter, rewards=[]) {
             if(slotCounter == 1) {
@@ -64,7 +64,7 @@ export default {
         </div>
         <div id="options">
             <BetSelectButton :bets="slotBets" id="betSelect" ref="betSelect"></BetSelectButton>
-            <SlotButton v-if="buttonPresent" @click="spinSlots(1)">Spin</SlotButton>
+            <PlayButton v-if="buttonPresent" @click="spinSlots(1)">Spin</PlayButton>
         </div>
         
     </main>
