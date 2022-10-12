@@ -1,16 +1,12 @@
 <script>
 export default {
-    data() {
-        return {
-            slotValues: ["$", "0", "7", "-", "="]
-        }
-    },
+    props: ["slotValues"],
     methods: {
         spin(spinCount) {
             const slotValueElement = this.$refs.slotValue;
-            const slotValues = this.slotValues;
+            const slotValues = this.$props.slotValues;
             slotValueElement.style.background = "#d7ffc0";
-            
+
             return new Promise((resolve, reject) => {
                 function spinRec() {
                     if (spinCount <= 0) {
