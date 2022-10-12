@@ -42,15 +42,19 @@ export default {
 
         },
         calculateReward(rewards) {
-            const setRewards = new Set(rewards);
+            const rewardsSet = new Set(rewards);
             let finalReward = 0;
-            if(setRewards.size === 1 && setRewards.has(...this.goodSlotValues)) finalReward = this.lastPlacedBet*2;
+            if(rewardsSet.size === 1 && this.hasGoodSlotValue(rewardsSet)) finalReward = this.lastPlacedBet*2;
 
             this.lastReward = finalReward;
-            this.broadcastRewards(finalReward);
+            this.$emit("changePoints", finalReward);
         },
-        broadcastRewards(rewards) {
-            this.$emit("changePoints", rewards);
+        hasGoodSlotValue(rewardsSet) {
+            let res = false;
+            this.goodSlotValues.forEach(goodSlotValue => {
+                if(rewardsSet.has(goodSlotValue)) res = true;
+            });
+            return res;
         }
     }
 }
