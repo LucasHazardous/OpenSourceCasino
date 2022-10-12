@@ -2,6 +2,7 @@
 import { RouterView } from 'vue-router'
 import NavBar from './components/NavBar.vue';
 
+if(localStorage.getItem("points") === null) localStorage.setItem("points", 1000000);
 </script>
 
 
@@ -9,13 +10,14 @@ import NavBar from './components/NavBar.vue';
 export default {
   data() {
     return {
-      points: 1000000,
+      points: Number(localStorage.getItem("points")),
       games: ["Slots"]
     }
   },
   methods: {
     changePoints(x) {
       this.points += x;
+      localStorage.setItem("points", this.points);
     }
   }
 }
