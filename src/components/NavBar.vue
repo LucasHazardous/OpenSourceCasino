@@ -11,7 +11,7 @@ defineProps({
   <main>
     <div id="menu">
       <a href="/">Open Source Casino</a>
-      <a href="/about">About</a>
+      <a href="/#/about">About</a>
     </div>
 
     <div id="pointCounter">
