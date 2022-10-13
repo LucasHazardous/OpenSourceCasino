@@ -11,7 +11,7 @@ export default {
 <template>
     <main>
         <button id="infoButton" @click="visible = !visible">Info</button>
-        <div id="infoContent" :style="'display: ' + (visible ? 'block' : 'none')">
+        <div id="infoContent" v-if="visible">
             <slot></slot>
         </div>
     </main>
