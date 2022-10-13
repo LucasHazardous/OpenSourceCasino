@@ -28,7 +28,7 @@ export default {
     <NavBar :points="points" />
   </header>
 
-  <RouterView :games="games" @changePoints="changePoints" />
+  <RouterView :games="games" @changePoints="changePoints" :points="points" />
   
 </template>
 

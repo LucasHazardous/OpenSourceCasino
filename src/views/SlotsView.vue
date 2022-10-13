@@ -6,6 +6,7 @@ import InfoSection from "../components/InfoSection.vue";
 import AutospinButton from "../components/AutospinButton.vue";
 
 export default {
+    props: ["points"],
     data() {
         return {
             slotSpinTimes: 10,
@@ -23,9 +24,12 @@ export default {
     methods: {
         spinSlots(slotCounter, rewards = []) {
             if (slotCounter == 1) {
-                if (this.spinning) return;
                 this.lastPlacedBet = Number(this.$refs.betSelect.$data.value);
-                this.$emit("changePoints", -Number(this.$refs.betSelect.$data.value));
+                if(this.$props.points - this.lastPlacedBet < 0) {
+                    this.autospinning = false;
+                    return;
+                }
+                this.$emit("changePoints", -this.lastPlacedBet);
             }
             else if (slotCounter > this.slotAmount) {
                 this.spinning = false;
