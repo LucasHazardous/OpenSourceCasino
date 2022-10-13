@@ -14,7 +14,6 @@ export default {
             spinning: false,
             slotBets: [5000, 10000, 20000],
             slotValues: ["$", "0", "7", "-", "="],
-            goodSlotValues: ["$", "7"],
             lastPlacedBet: 0,
             lastReward: 0,
             autospinning: false
@@ -24,8 +23,10 @@ export default {
     methods: {
         spinSlots(slotCounter, rewards = []) {
             if (slotCounter == 1) {
+                if(this.spinning) return;
+
                 this.lastPlacedBet = Number(this.$refs.betSelect.$data.value);
-                if(this.$props.points - this.lastPlacedBet < 0) {
+                if (this.$props.points - this.lastPlacedBet < 0) {
                     this.autospinning = false;
                     return;
                 }
@@ -44,38 +45,23 @@ export default {
             });
         },
         calculateReward(rewards) {
-            const rewardsSet = new Set(rewards);
+            const rewardsMap = rewards.reduce((map, reward) => map.set(reward, (map.get(reward) || 0) + 1), new Map());
             let finalReward = 0;
-            if (this.hasGoodSlotValue(rewardsSet)) {
-                if (rewardsSet.size === 1) {
-                    switch ([...rewardsSet][0]) {
-                        case "7":
-                            finalReward = this.lastPlacedBet * 7;
-                            break;
-                        case "$":
-                            finalReward = this.lastPlacedBet * 5;
-                            break;
-                    }
-                }
-            }
+
+            if (rewardsMap.get("$") === this.slotAmount) finalReward = this.lastPlacedBet * 5;
+            else if (rewardsMap.get("7") === this.slotAmount) finalReward = this.lastPlacedBet * 7;
+            else if (rewardsMap.get("=") >= 2) finalReward = this.lastPlacedBet * 2;
 
             this.lastReward = finalReward;
             this.$emit("changePoints", finalReward);
-        },
-        hasGoodSlotValue(rewardsSet) {
-            let res = false;
-            this.goodSlotValues.forEach(goodSlotValue => {
-                if (rewardsSet.has(goodSlotValue)) res = true;
-            });
-            return res;
         }
     },
     watch: {
         autospinning: function autospinWatch() {
-            if(!this.spinning && this.autospinning) this.spinSlots(1);
+            if (!this.spinning && this.autospinning) this.spinSlots(1);
         },
         spinning: function spinWatch() {
-            if(!this.spinning && this.autospinning) this.spinSlots(1);
+            if (!this.spinning && this.autospinning) setTimeout(this.spinSlots, 500, 1);
         }
     }
 }
@@ -89,8 +75,10 @@ export default {
         </div>
         <div id="options">
             <BetSelectButton :bets="slotBets" id="betSelect" ref="betSelect"></BetSelectButton>
-            <PlayButton :style="spinning ? 'pointer-events: none; opacity: 0.2' : 'pointer-events: auto'" @click="spinSlots(1)" ref="spinButton">Spin</PlayButton>
-            <AutospinButton @click="autospinning = !autospinning" :autospinning="autospinning" id="autospinButton">Autospin</AutospinButton>
+            <PlayButton :style="spinning || autospinning ? 'pointer-events: none; opacity: 0.2' : 'pointer-events: auto'"
+                @click="spinSlots(1)" ref="spinButton">Spin</PlayButton>
+            <AutospinButton @click="autospinning = !autospinning" :autospinning="autospinning" id="autospinButton">
+                Autospin</AutospinButton>
         </div>
 
         <InfoSection>
@@ -103,13 +91,19 @@ export default {
                 </tr>
                 <tr>
                     <td>$$$</td>
-                    <td>{{ 1/Math.pow(this.slotValues.length, this.slotAmount)*100 }}%</td>
+                    <td>{{ (1/Math.pow(this.slotValues.length, this.slotAmount)*100).toFixed(2) }}%</td>
                     <td>original bet x 5</td>
                 </tr>
                 <tr>
                     <td>777</td>
-                    <td>{{ 1/Math.pow(this.slotValues.length, this.slotAmount)*100 }}%</td>
+                    <td>{{ (1/Math.pow(this.slotValues.length, this.slotAmount)*100).toFixed(2) }}%</td>
                     <td>original bet x 7</td>
+                </tr>
+                <tr>
+                    <td>at least two =</td>
+                    <td>{{ ((1-((Math.pow(this.slotValues.length-1, this.slotAmount)+Math.pow(this.slotValues.length-1,
+                    this.slotAmount-1)*this.slotAmount)/Math.pow(this.slotValues.length, this.slotAmount)))*100).toFixed(2) }}%</td>
+                    <td>original bet x 2</td>
                 </tr>
             </table>
         </InfoSection>
