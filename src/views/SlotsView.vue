@@ -3,6 +3,7 @@ import Slot from "../components/Slot.vue";
 import PlayButton from "../components/PlayButton.vue";
 import BetSelectButton from "../components/BetSelectButton.vue";
 import InfoSection from "../components/InfoSection.vue";
+import AutospinButton from "../components/AutospinButton.vue";
 
 export default {
     data() {
@@ -15,22 +16,20 @@ export default {
             goodSlotValues: ["$", "7"],
             lastPlacedBet: 0,
             lastReward: 0,
-            buttonPresent: true
+            autospinning: false
         };
     },
-    components: { Slot, PlayButton, BetSelectButton, InfoSection },
+    components: { Slot, PlayButton, BetSelectButton, InfoSection, AutospinButton },
     methods: {
         spinSlots(slotCounter, rewards = []) {
             if (slotCounter == 1) {
                 if (this.spinning) return;
-                this.buttonPresent = false;
                 this.lastPlacedBet = Number(this.$refs.betSelect.$data.value);
                 this.$emit("changePoints", -Number(this.$refs.betSelect.$data.value));
             }
             else if (slotCounter > this.slotAmount) {
                 this.spinning = false;
                 this.calculateReward(rewards);
-                this.buttonPresent = true;
                 return;
             }
 
@@ -39,8 +38,6 @@ export default {
                 rewards.push(res);
                 this.spinSlots(slotCounter + 1, rewards);
             });
-
-
         },
         calculateReward(rewards) {
             const rewardsSet = new Set(rewards);
@@ -68,6 +65,14 @@ export default {
             });
             return res;
         }
+    },
+    watch: {
+        autospinning: function autospinWatch() {
+            if(this.autospinning) this.spinSlots(1);
+        },
+        spinning: function spinWatch() {
+            if(!this.spinning && this.autospinning) this.spinSlots(1);
+        }
     }
 }
 </script>
@@ -80,7 +85,8 @@ export default {
         </div>
         <div id="options">
             <BetSelectButton :bets="slotBets" id="betSelect" ref="betSelect"></BetSelectButton>
-            <PlayButton v-if="buttonPresent" @click="spinSlots(1)">Spin</PlayButton>
+            <PlayButton :style="spinning ? 'pointer-events: none; opacity: 0.2' : 'pointer-events: auto'" @click="spinSlots(1)" ref="spinButton">Spin</PlayButton>
+            <AutospinButton @click="autospinning = !autospinning" :autospinning="autospinning" id="autospinButton">Autospin</AutospinButton>
         </div>
 
         <InfoSection>
@@ -132,11 +138,20 @@ main {
 #options {
     margin-top: 10%;
     position: relative;
+    display: grid;
+    column-gap: 10%;
+    grid-template-columns: repeat(3, 1fr);
+}
+
+#autospinButton {
+    margin-right: 5%;
 }
 
 #betSelect {
     display: flex;
     margin-left: 5%;
+    width: 100%;
+    cursor: pointer;
 }
 
 table {
