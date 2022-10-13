@@ -10,6 +10,16 @@
   user-select: none;
 }
 
-html, body {
+html,
+body {
   background-color: #1f1f1f;
+}
+
+body::-webkit-scrollbar {
+  display: none;
+}
+
+body {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
 }
