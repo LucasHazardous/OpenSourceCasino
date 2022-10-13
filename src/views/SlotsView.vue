@@ -72,7 +72,7 @@ export default {
     },
     watch: {
         autospinning: function autospinWatch() {
-            if(this.autospinning) this.spinSlots(1);
+            if(!this.spinning && this.autospinning) this.spinSlots(1);
         },
         spinning: function spinWatch() {
             if(!this.spinning && this.autospinning) this.spinSlots(1);
