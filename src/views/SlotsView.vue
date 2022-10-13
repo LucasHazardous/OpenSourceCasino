@@ -7,7 +7,6 @@ import InfoSection from "../components/InfoSection.vue";
 export default {
     data() {
         return {
-            amountWon: 0,
             slotSpinTimes: 10,
             slotAmount: 3,
             spinning: false,
@@ -133,10 +132,6 @@ main {
 #options {
     margin-top: 10%;
     position: relative;
-}
-
-BetSelectButton {
-    position: absolute;
 }
 
 #betSelect {
