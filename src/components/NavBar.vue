@@ -15,7 +15,7 @@ defineProps({
     </div>
 
     <div id="pointCounter">
-      <p id="pointCounterContent">Points: {{ points }}</p>
+      <p id="pointCounterContent">🍩 {{ points.toLocaleString("fi-FI") }}</p>
     </div>
   </main>
 </template>
