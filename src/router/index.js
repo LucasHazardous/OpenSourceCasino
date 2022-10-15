@@ -20,6 +20,11 @@ const router = createRouter({
       path: '/slots',
       name: 'slots',
       component: () => import('../views/SlotsView.vue')
+    },
+    {
+      path: '/roulette',
+      name: 'roulette',
+      component: () => import('../views/RouletteView.vue')
     }
   ]
 })

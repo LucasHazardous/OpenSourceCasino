@@ -30,7 +30,6 @@ export default {
 
 <style scoped>
 select {
-    outline: none;
     color: azure;
     appearance: none;
     text-align: center;
