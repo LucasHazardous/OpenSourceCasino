@@ -28,7 +28,6 @@ main {
     border: none;
     background-color: #b4e995;
     border-radius: 0.3rem;
-    outline: none;
 }
 
 #infoButton:hover {
