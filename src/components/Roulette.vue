@@ -46,15 +46,21 @@ export default {
             this.canvasCtx.stroke();
 
             r -= size*this.offset;
+            let radianSum = (1/this.fieldCount) * Math.PI;
 
             for(let i = 0; i < this.fieldCount; i++) {
-                const pointX = r*Math.sin(2*Math.PI*i/this.fieldCount) + centerX;
-                const pointY = r*Math.cos(2*Math.PI*i/this.fieldCount) + centerY;
+                const current = (1/this.fieldCount) * 2 * Math.PI;
 
                 this.canvasCtx.beginPath();
-                this.canvasCtx.moveTo(pointX, pointY);
+                this.canvasCtx.arc(centerX, centerY, r, radianSum, radianSum + current);
+                radianSum += current;
                 this.canvasCtx.lineTo(centerX, centerY);
-                this.canvasCtx.stroke();
+
+                if(i % 2 == 0)
+                this.canvasCtx.fillStyle = "red";
+                else this.canvasCtx.fillStyle = "black";
+
+                this.canvasCtx.fill();
             }
         }
     }
