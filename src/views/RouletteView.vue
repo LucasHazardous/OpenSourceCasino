@@ -8,15 +8,40 @@ export default {
     props: ["points"],
     data() {
         return {
-            rouletteBets: [5000, 10000, 20000],
+            rouletteBets: [100000, 200000],
             autospinning: false,
-            lastReward: 0
+            lastReward: 0,
+            spinning: false,
+            colors: ["red", "black"]
         };
     },
     components: { PlayButton, BetSelectButton, AutospinButton, Roulette },
     methods: {
         spinRoulette() {
-            this.$refs.roulette.spin();
+            if (this.spinning) return;
+
+            this.spinning = true;
+
+            const placedBet = this.$refs.betSelect.$data.value;
+            this.$emit("changePoints", -placedBet);
+
+            const chosenColor = this.$refs.colorSelect.$data.value;
+
+            this.$refs.roulette.spin().then(res => {
+                if (res == chosenColor) {
+                    this.$emit("changePoints", placedBet * 2);
+                    this.lastReward = placedBet * 2;
+                } else this.lastReward = 0;
+                this.spinning = false;
+            });
+        }
+    },
+    watch: {
+        autospinning: function autospinWatch() {
+            if (!this.spinning && this.autospinning) this.spinRoulette();
+        },
+        spinning: function spinWatch() {
+            if (!this.spinning && this.autospinning) setTimeout(this.spinRoulette, 1000);
         }
     }
 }
@@ -28,10 +53,16 @@ export default {
         <Roulette ref="roulette"></Roulette>
         <div id="options">
             <BetSelectButton :bets="rouletteBets" id="betSelect" ref="betSelect"></BetSelectButton>
-            <PlayButton @click="spinRoulette">Spin</PlayButton>
-            <AutospinButton :autospinning="autospinning" id="autospinButton">
+
+            <PlayButton
+                :style="spinning || autospinning ? 'pointer-events: none; opacity: 0.2' : 'pointer-events: auto'"
+                @click="spinRoulette">Spin</PlayButton>
+            <AutospinButton @click="autospinning = !autospinning" :autospinning="autospinning" id="autospinButton">
                 Autospin</AutospinButton>
         </div>
+        <BetSelectButton
+            :style="spinning || autospinning ? 'pointer-events: none; opacity: 0.2' : 'pointer-events: auto'"
+            :bets="colors" id="colorSelect" ref="colorSelect"></BetSelectButton>
     </main>
 </template>
 
@@ -55,6 +86,10 @@ main {
 
 #autospinButton {
     margin-right: 5%;
+}
+
+#colorSelect {
+    margin-top: 5%;
 }
 
 #betSelect {
