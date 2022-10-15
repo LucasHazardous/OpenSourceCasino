@@ -7,7 +7,9 @@ export default {
             spinning: false,
             canvasRadius: 0.5,
             offset: 0.05,
-            fieldCount: 20
+            fieldCount: 20,
+            ballSize: 0.05,
+            i: 0
         }
     },
     mounted() {
@@ -22,6 +24,20 @@ export default {
         spin() {
             this.drawFreshWheel();
             this.spinning = true;
+
+            const size = this.canvas.width;
+            let r = this.canvasRadius*size;
+            const centerX = size/2;
+            const centerY = size/2;
+
+            this.canvasCtx.fillStyle = "white";
+            this.canvasCtx.beginPath();
+            const pointX = (r-size*this.ballSize*2)*Math.sin(2*Math.PI*this.i/this.fieldCount) + centerX;
+            const pointY = (r-size*this.ballSize*2)*Math.cos(2*Math.PI*this.i/this.fieldCount) + centerY;
+            this.canvasCtx.arc(pointX, pointY, size*this.ballSize, 0, 2 * Math.PI);
+            this.canvasCtx.fill();
+
+            this.i++;
         },
         rescaleCanvas() {
             if(this.spinning) return;
