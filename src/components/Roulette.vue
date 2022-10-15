@@ -47,7 +47,6 @@ export default {
 
             r -= size*this.offset;
 
-            this.canvasCtx.fillStyle = "red";
             for(let i = 0; i < this.fieldCount; i++) {
                 const pointX = r*Math.sin(2*Math.PI*i/this.fieldCount) + centerX;
                 const pointY = r*Math.cos(2*Math.PI*i/this.fieldCount) + centerY;
@@ -69,6 +68,5 @@ export default {
 <style scoped>
 canvas {
     margin-top: 5%;
-    background-color: azure;
 }
 </style>
