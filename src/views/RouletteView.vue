@@ -3,6 +3,7 @@ import PlayButton from "../components/PlayButton.vue";
 import BetSelectButton from "../components/BetSelectButton.vue";
 import AutospinButton from "../components/AutospinButton.vue";
 import Roulette from "../components/Roulette.vue";
+import InfoSection from "../components/InfoSection.vue";
 
 export default {
     props: ["points"],
@@ -15,7 +16,7 @@ export default {
             colors: ["red", "black"]
         };
     },
-    components: { PlayButton, BetSelectButton, AutospinButton, Roulette },
+    components: { PlayButton, BetSelectButton, AutospinButton, Roulette, InfoSection },
     methods: {
         spinRoulette() {
             if (this.spinning) return;
@@ -29,8 +30,8 @@ export default {
 
             this.$refs.roulette.spin().then(res => {
                 if (res == chosenColor) {
-                    this.$emit("changePoints", placedBet * 2);
-                    this.lastReward = placedBet * 2;
+                    this.$emit("changePoints", placedBet * 1.5);
+                    this.lastReward = placedBet * 1.5;
                 } else this.lastReward = 0;
                 this.spinning = false;
             });
@@ -63,6 +64,26 @@ export default {
         <BetSelectButton
             :style="spinning || autospinning ? 'pointer-events: none; opacity: 0.2' : 'pointer-events: auto'"
             :bets="colors" id="colorSelect" ref="colorSelect"></BetSelectButton>
+        <InfoSection>
+            <h2>Loot table</h2>
+            <table>
+                <tr>
+                    <th>Color selected and received</th>
+                    <th>Theoretical Chance</th>
+                    <th>Reward</th>
+                </tr>
+                <tr>
+                    <td>black</td>
+                    <td>{{ 50 }}%</td>
+                    <td>original bet x 1.5</td>
+                </tr>
+                <tr>
+                    <td>red</td>
+                    <td>{{ 50 }}%</td>
+                    <td>original bet x 1.5</td>
+                </tr>
+            </table>
+        </InfoSection>
     </main>
 </template>
 
@@ -97,5 +118,21 @@ main {
     margin-left: 5%;
     width: 100%;
     cursor: pointer;
+}
+
+table {
+    border-collapse: collapse;
+    width: 100%;
+}
+
+td,
+th {
+    border: 1px solid black;
+    text-align: left;
+    padding: 0.5rem;
+}
+
+tr:nth-child(even) {
+    background-color: azure;
 }
 </style>
