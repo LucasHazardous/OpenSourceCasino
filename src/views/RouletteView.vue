@@ -21,9 +21,15 @@ export default {
         spinRoulette() {
             if (this.spinning) return;
 
-            this.spinning = true;
-
             const placedBet = this.$refs.betSelect.$data.value;
+
+            if (this.$props.points - placedBet < 0) {
+                this.autospinning = false;
+                return;
+            }
+
+            this.spinning = true;
+            
             this.$emit("changePoints", -placedBet);
 
             const chosenColor = this.$refs.colorSelect.$data.value;
