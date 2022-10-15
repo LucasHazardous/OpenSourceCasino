@@ -72,11 +72,6 @@ export default {
             this.canvasCtx.arc(centerX, centerY, r, 0, 2 * Math.PI, false);
             this.canvasCtx.fill();
 
-            this.canvasCtx.strokeStyle = "red";
-            this.canvasCtx.beginPath();
-            this.canvasCtx.arc(centerX, centerY, r * (1 - this.offset * 2), 0, 2 * Math.PI, false);
-            this.canvasCtx.stroke();
-
             r -= size * this.offset;
             let radianSum = (1 / this.fieldCount) * Math.PI;
 
