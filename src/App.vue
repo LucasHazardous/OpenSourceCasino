@@ -11,7 +11,7 @@ export default {
   data() {
     return {
       points: Number(localStorage.getItem("points")),
-      games: ["Slots"]
+      games: ["Slots", "Roulette"]
     }
   },
   methods: {
