@@ -24,6 +24,6 @@ body {
   scrollbar-width: none;
 }
 
-button {
+button, select {
   outline: none;
 }
