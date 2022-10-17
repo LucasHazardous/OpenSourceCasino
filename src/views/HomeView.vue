@@ -32,6 +32,9 @@ main {
   border-radius: 5%;
 
   animation: 5s rotate linear infinite;
+
+  min-height: 1rem;
+  max-height: 10%;
 }
 
 .game:hover {
