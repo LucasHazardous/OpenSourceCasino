@@ -25,6 +25,11 @@ const router = createRouter({
       path: '/roulette',
       name: 'roulette',
       component: () => import('../views/RouletteView.vue')
+    },
+    {
+      path: '/blackjack',
+      name: 'blackjack',
+      component: () => import('../views/BlackjackView.vue')
     }
   ]
 })
