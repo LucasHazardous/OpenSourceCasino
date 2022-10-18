@@ -43,6 +43,16 @@ export default {
         },
         stand() {
             this.dealerHide = false;
+            while(this.calculateHandValue(this.dealerCards) < 17) this.dealerCards.push(this.fetchCard());
+
+            const playerHandValue = this.calculateHandValue(this.playerCards);
+            const dealerHandValue = this.calculateHandValue(this.dealerCards);
+            if(playerHandValue > dealerHandValue) this.$emit("changePoints", this.selectedBet);
+            else if(dealerHandValue > playerHandValue) this.$emit("changePoints", -this.selectedBet);
+
+            this.clearBothHands();
+            this.giveDealerCards();
+            this.givePlayerCards();
         },
         canPerformAction() {
             return this.points - this.selectedBet >= 0;
@@ -70,6 +80,10 @@ export default {
             this.dealerHide = true;
             this.dealerCards.push(this.fetchCard());
             this.dealerCards.push(this.fetchCard());
+        },
+        clearBothHands() {
+            this.playerCards = [];
+            this.dealerCards = [];
         },
         fetchCard() {
             let selectedCard = this.deckCards.splice(Math.floor(Math.random() * this.deckCards.length), 1)[0];
