@@ -57,11 +57,15 @@ export default {
             const dealerHandValue = this.calculateHandValue(this.dealerCards);
             this.dealerHandValue = dealerHandValue;
 
+            let lastReward = 0;
             if(this.playerHandValue > 21 && dealerHandValue > 21);
-            else if(this.playerHandValue > 21) this.$emit("changePoints", -this.selectedBet);
-            else if(dealerHandValue > 21) this.$emit("changePoints", this.selectedBet);
-            else if(this.playerHandValue > dealerHandValue) this.$emit("changePoints", this.selectedBet);
-            else if(dealerHandValue > this.playerHandValue) this.$emit("changePoints", -this.selectedBet);
+            else if(this.playerHandValue > 21) lastReward = -this.selectedBet;
+            else if(dealerHandValue > 21) lastReward = this.selectedBet;
+            else if(this.playerHandValue > dealerHandValue) lastReward = this.selectedBet;
+            else if(dealerHandValue > this.playerHandValue) lastReward = -this.selectedBet;
+
+            this.$emit("changePoints", lastReward);
+            this.lastReward = lastReward;
 
             this.enableButtons = false;
             this.continueButtonEnabled = true;
