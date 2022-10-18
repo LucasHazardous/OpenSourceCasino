@@ -26,7 +26,8 @@ export default {
             discardedCards: [],
             dealerHide: true,
             playerHandValue: 0,
-            cardsInPlay: []
+            cardsInPlay: [],
+            enableButtons: true
         };
     },
     components: { PlayButton, BetSelectButton, BlackjackCardTable },
@@ -39,7 +40,7 @@ export default {
             this.givePlayerCards();
         },
         hit() {
-            if (!this.canPerformAction()) return;
+            if (!this.canPerformAction() || this.playerHandValue > 20) return;
 
             this.playerCards.push(this.fetchCard());
 
@@ -52,10 +53,15 @@ export default {
             while(this.calculateHandValue(this.dealerCards) < 17) this.dealerCards.push(this.fetchCard());
 
             const dealerHandValue = this.calculateHandValue(this.dealerCards);
-            if(this.playerHandValue > dealerHandValue) this.$emit("changePoints", this.selectedBet);
+
+            if(this.playerHandValue > 21 && dealerHandValue > 21);
+            else if(this.playerHandValue > 21) this.$emit("changePoints", -this.selectedBet);
+            else if(dealerHandValue > 21) this.$emit("changePoints", this.selectedBet);
+            else if(this.playerHandValue > dealerHandValue) this.$emit("changePoints", this.selectedBet);
             else if(dealerHandValue > this.playerHandValue) this.$emit("changePoints", -this.selectedBet);
 
-            this.startNewRound();
+            this.enableButtons = false;
+            setTimeout(this.startNewRound, 5000);
         },
         startNewRound() {
             this.clearBothHands();
@@ -63,6 +69,7 @@ export default {
             this.cardsInPlay = [];
             this.giveDealerCards();
             this.givePlayerCards();
+            this.enableButtons = true;
         },
         canPerformAction() {
             return this.points - this.selectedBet >= 0;
@@ -140,8 +147,8 @@ export default {
             <h1 id="playerHandValue">{{ playerHandValue }}</h1>
 
             <div id="options">
-                <PlayButton @click="hit">Hit</PlayButton>
-                <PlayButton @click="stand">Stand</PlayButton>
+                <PlayButton v-if="enableButtons" @click="hit">Hit</PlayButton>
+                <PlayButton v-if="enableButtons" @click="stand">Stand</PlayButton>
             </div>
         </div>
     </main>
