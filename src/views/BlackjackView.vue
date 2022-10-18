@@ -35,7 +35,7 @@ export default {
         hit() {
             if (!this.canPerformAction()) return;
 
-            const selectedCard = this.deckCards.splice(Math.floor(Math.random() * this.deckCards.length), 1);
+            const selectedCard = this.deckCards.splice(Math.floor(Math.random() * this.deckCards.length), 1)[0];
             this.playerCards.push(selectedCard);
             this.discardedCards.push(selectedCard);
         },
@@ -44,6 +44,21 @@ export default {
         },
         canPerformAction() {
             return this.points - this.selectedBet >= 0;
+        },
+        calculateHandValue(arr) {
+            let aceCount = 0;
+            let value = 0;
+            for(let i = 0; i < arr.length; i++) {
+                const cardValue = arr[i][2];
+
+                if(cardValue == "A") aceCount++;
+                else if(!isNaN(cardValue)) value += Number(cardValue);
+                else value += 10;
+            }
+
+            value += aceCount;
+            if(value <= 11 && aceCount > 0) value += 10;
+            return value;
         }
     }
 }
