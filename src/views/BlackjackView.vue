@@ -25,7 +25,8 @@ export default {
             playerCards: [],
             discardedCards: [],
             dealerHide: true,
-            playerHandValue: 0
+            playerHandValue: 0,
+            cardsInPlay: []
         };
     },
     components: { PlayButton, BetSelectButton, BlackjackCardTable },
@@ -45,6 +46,8 @@ export default {
             this.playerHandValue = this.calculateHandValue(this.playerCards);
         },
         stand() {
+            if (!this.canPerformAction()) return;
+
             this.dealerHide = false;
             while(this.calculateHandValue(this.dealerCards) < 17) this.dealerCards.push(this.fetchCard());
 
@@ -52,7 +55,12 @@ export default {
             if(this.playerHandValue > dealerHandValue) this.$emit("changePoints", this.selectedBet);
             else if(dealerHandValue > this.playerHandValue) this.$emit("changePoints", -this.selectedBet);
 
+            this.startNewRound();
+        },
+        startNewRound() {
             this.clearBothHands();
+            this.discardedCards = this.discardedCards.concat(this.cardsInPlay);
+            this.cardsInPlay = [];
             this.giveDealerCards();
             this.givePlayerCards();
         },
@@ -91,9 +99,26 @@ export default {
             this.playerHandValue = 0;
         },
         fetchCard() {
+            if(this.deckCards.length == 0) {
+                alert("Shuffling discarded hands back to the deck.");
+                this.shuffleDiscardToDeck();
+            }
+
             let selectedCard = this.deckCards.splice(Math.floor(Math.random() * this.deckCards.length), 1)[0];
-            this.discardedCards.push(selectedCard);
+            
+            this.cardsInPlay.push(selectedCard);
             return selectedCard;
+        },
+        shuffleDiscardToDeck() {
+            this.deckCards = this.discardedCards;
+            this.discardedCards = [];
+            
+            for(let i = this.deckCards.length-1; i > 0; i--) {
+                const r = Math.floor(Math.random() * (i+1));
+                const tmp = this.deckCards[i];
+                this.deckCards[i] = this.deckCards[r];
+                this.deckCards[r] = tmp;
+            }
         }
     }
 }
@@ -109,7 +134,8 @@ export default {
         </div>
 
         <div id="game" v-if="playing">
-            <BlackjackCardTable :dealerHide="dealerHide" :cards="dealerCards"></BlackjackCardTable>
+            <h1 id="announcements">{{  }}</h1>
+            <BlackjackCardTable :dealerHide="false" :cards="dealerCards"></BlackjackCardTable>
             <BlackjackCardTable :dealerHide="false" :cards="playerCards"></BlackjackCardTable>
             <h1 id="playerHandValue">{{ playerHandValue }}</h1>
 
