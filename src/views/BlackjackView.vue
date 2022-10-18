@@ -24,7 +24,8 @@ export default {
             dealerCards: [],
             playerCards: [],
             discardedCards: [],
-            dealerHide: true
+            dealerHide: true,
+            playerHandValue: 0
         };
     },
     components: { PlayButton, BetSelectButton, BlackjackCardTable },
@@ -40,15 +41,16 @@ export default {
             if (!this.canPerformAction()) return;
 
             this.playerCards.push(this.fetchCard());
+
+            this.playerHandValue = this.calculateHandValue(this.playerCards);
         },
         stand() {
             this.dealerHide = false;
             while(this.calculateHandValue(this.dealerCards) < 17) this.dealerCards.push(this.fetchCard());
 
-            const playerHandValue = this.calculateHandValue(this.playerCards);
             const dealerHandValue = this.calculateHandValue(this.dealerCards);
-            if(playerHandValue > dealerHandValue) this.$emit("changePoints", this.selectedBet);
-            else if(dealerHandValue > playerHandValue) this.$emit("changePoints", -this.selectedBet);
+            if(this.playerHandValue > dealerHandValue) this.$emit("changePoints", this.selectedBet);
+            else if(dealerHandValue > this.playerHandValue) this.$emit("changePoints", -this.selectedBet);
 
             this.clearBothHands();
             this.giveDealerCards();
@@ -75,6 +77,8 @@ export default {
         givePlayerCards() {
             this.playerCards.push(this.fetchCard());
             this.playerCards.push(this.fetchCard());
+
+            this.playerHandValue = this.calculateHandValue(this.playerCards);
         },
         giveDealerCards() {
             this.dealerHide = true;
@@ -84,6 +88,7 @@ export default {
         clearBothHands() {
             this.playerCards = [];
             this.dealerCards = [];
+            this.playerHandValue = 0;
         },
         fetchCard() {
             let selectedCard = this.deckCards.splice(Math.floor(Math.random() * this.deckCards.length), 1)[0];
@@ -106,6 +111,7 @@ export default {
         <div id="game" v-if="playing">
             <BlackjackCardTable :dealerHide="dealerHide" :cards="dealerCards"></BlackjackCardTable>
             <BlackjackCardTable :dealerHide="false" :cards="playerCards"></BlackjackCardTable>
+            <h1 id="playerHandValue">{{ playerHandValue }}</h1>
 
             <div id="options">
                 <PlayButton @click="hit">Hit</PlayButton>
@@ -138,5 +144,9 @@ main {
     display: flex;
     width: 100%;
     cursor: pointer;
+}
+
+#playerHandValue {
+    color: aquamarine;
 }
 </style>
