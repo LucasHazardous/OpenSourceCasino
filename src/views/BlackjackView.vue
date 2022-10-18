@@ -28,7 +28,8 @@ export default {
             playerHandValue: 0,
             cardsInPlay: [],
             enableButtons: true,
-            dealerHandValue: -1
+            dealerHandValue: -1,
+            continueButtonEnabled: false
         };
     },
     components: { PlayButton, BetSelectButton, BlackjackCardTable },
@@ -63,9 +64,10 @@ export default {
             else if(dealerHandValue > this.playerHandValue) this.$emit("changePoints", -this.selectedBet);
 
             this.enableButtons = false;
-            setTimeout(this.startNewRound, 5000);
+            this.continueButtonEnabled = true;
         },
         startNewRound() {
+            this.continueButtonEnabled = false;
             this.dealerHandValue = -1;
             this.clearBothHands();
             this.discardedCards = this.discardedCards.concat(this.cardsInPlay);
@@ -152,6 +154,7 @@ export default {
             <div id="options">
                 <PlayButton v-if="enableButtons" @click="hit">Hit</PlayButton>
                 <PlayButton v-if="enableButtons" @click="stand">Stand</PlayButton>
+                <PlayButton v-if="continueButtonEnabled" @click="startNewRound">Next Round</PlayButton>
             </div>
         </div>
     </main>
