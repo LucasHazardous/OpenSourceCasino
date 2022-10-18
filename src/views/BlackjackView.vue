@@ -23,7 +23,8 @@ export default {
             ],
             dealerCards: [],
             playerCards: [],
-            discardedCards: []
+            discardedCards: [],
+            dealerHide: true
         };
     },
     components: { PlayButton, BetSelectButton, BlackjackCardTable },
@@ -31,16 +32,17 @@ export default {
         startGame() {
             this.selectedBet = this.$refs.betSelect.$data.value;
             this.playing = true;
+
+            this.giveDealerCards();
+            this.givePlayerCards();
         },
         hit() {
             if (!this.canPerformAction()) return;
 
-            const selectedCard = this.deckCards.splice(Math.floor(Math.random() * this.deckCards.length), 1)[0];
-            this.playerCards.push(selectedCard);
-            this.discardedCards.push(selectedCard);
+            this.playerCards.push(this.fetchCard());
         },
         stand() {
-
+            this.dealerHide = false;
         },
         canPerformAction() {
             return this.points - this.selectedBet >= 0;
@@ -59,6 +61,20 @@ export default {
             value += aceCount;
             if(value <= 11 && aceCount > 0) value += 10;
             return value;
+        },
+        givePlayerCards() {
+            this.playerCards.push(this.fetchCard());
+            this.playerCards.push(this.fetchCard());
+        },
+        giveDealerCards() {
+            this.dealerHide = true;
+            this.dealerCards.push(this.fetchCard());
+            this.dealerCards.push(this.fetchCard());
+        },
+        fetchCard() {
+            let selectedCard = this.deckCards.splice(Math.floor(Math.random() * this.deckCards.length), 1)[0];
+            this.discardedCards.push(selectedCard);
+            return selectedCard;
         }
     }
 }
@@ -74,8 +90,8 @@ export default {
         </div>
 
         <div id="game" v-if="playing">
-            <BlackjackCardTable :cards="dealerCards"></BlackjackCardTable>
-            <BlackjackCardTable :cards="playerCards"></BlackjackCardTable>
+            <BlackjackCardTable :dealerHide="dealerHide" :cards="dealerCards"></BlackjackCardTable>
+            <BlackjackCardTable :dealerHide="false" :cards="playerCards"></BlackjackCardTable>
 
             <div id="options">
                 <PlayButton @click="hit">Hit</PlayButton>
