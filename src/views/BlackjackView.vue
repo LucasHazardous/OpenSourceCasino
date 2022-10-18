@@ -34,7 +34,7 @@ export default {
     components: { PlayButton, BetSelectButton, BlackjackCardTable },
     methods: {
         startGame() {
-            this.selectedBet = this.$refs.betSelect.$data.value;
+            this.selectedBet = Number(this.$refs.betSelect.$data.value);
             this.playing = true;
 
             this.giveDealerCards();
@@ -110,7 +110,7 @@ export default {
         },
         fetchCard() {
             if(this.deckCards.length == 0) {
-                alert("Shuffling discarded hands back to the deck.");
+                alert("Shuffling discarded cards back to the deck.");
                 this.shuffleDiscardToDeck();
             }
 
