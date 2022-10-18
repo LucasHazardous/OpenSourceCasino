@@ -27,7 +27,8 @@ export default {
             dealerHide: true,
             playerHandValue: 0,
             cardsInPlay: [],
-            enableButtons: true
+            enableButtons: true,
+            dealerHandValue: -1
         };
     },
     components: { PlayButton, BetSelectButton, BlackjackCardTable },
@@ -53,6 +54,7 @@ export default {
             while(this.calculateHandValue(this.dealerCards) < 17) this.dealerCards.push(this.fetchCard());
 
             const dealerHandValue = this.calculateHandValue(this.dealerCards);
+            this.dealerHandValue = dealerHandValue;
 
             if(this.playerHandValue > 21 && dealerHandValue > 21);
             else if(this.playerHandValue > 21) this.$emit("changePoints", -this.selectedBet);
@@ -64,6 +66,7 @@ export default {
             setTimeout(this.startNewRound, 5000);
         },
         startNewRound() {
+            this.dealerHandValue = -1;
             this.clearBothHands();
             this.discardedCards = this.discardedCards.concat(this.cardsInPlay);
             this.cardsInPlay = [];
@@ -141,10 +144,10 @@ export default {
         </div>
 
         <div id="game" v-if="playing">
-            <h1 id="announcements">{{  }}</h1>
-            <BlackjackCardTable :dealerHide="false" :cards="dealerCards"></BlackjackCardTable>
+            <h1>{{ dealerHandValue < 0 ? "?" : dealerHandValue }}</h1>
+            <BlackjackCardTable :dealerHide="dealerHide" :cards="dealerCards"></BlackjackCardTable>
             <BlackjackCardTable :dealerHide="false" :cards="playerCards"></BlackjackCardTable>
-            <h1 id="playerHandValue">{{ playerHandValue }}</h1>
+            <h1>{{ playerHandValue }}</h1>
 
             <div id="options">
                 <PlayButton v-if="enableButtons" @click="hit">Hit</PlayButton>
@@ -179,7 +182,7 @@ main {
     cursor: pointer;
 }
 
-#playerHandValue {
+h1 {
     color: aquamarine;
 }
 </style>

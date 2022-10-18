@@ -6,7 +6,7 @@ export default {
 
 <template>
     <div id="cardContainer">
-        {{ dealerHide ? cards[0] : cards.join(" ") }}
+        {{ dealerHide ? cards[0] + " | ?" : cards.join(" | ") }}
     </div>
 </template>
 
