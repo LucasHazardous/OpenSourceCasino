@@ -9,7 +9,7 @@ defineProps({
 
 <template>
   <main>
-    <a class="game" v-for="game in games" :href="'/#/'+game">
+    <a class="game" v-for="game in games" :href="'/OpenSourceCasino/#/'+game">
       <div>{{ game }}</div>
     </a>
   </main>

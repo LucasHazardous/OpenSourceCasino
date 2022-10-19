@@ -10,8 +10,8 @@ defineProps({
 <template>
   <main>
     <div id="menu">
-      <a href="/">Open Source Casino</a>
-      <a href="/#/about">About</a>
+      <a href="/OpenSourceCasino">Open Source Casino</a>
+      <a href="/OpenSourceCasino/#/about">About</a>
     </div>
 
     <div id="pointCounter">
