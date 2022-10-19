@@ -172,7 +172,7 @@ export default {
         <InfoSection>
             Starting a new game or a new round = Dealer takes your bet <br> <br>
             Tie = Dealer returns your bet <br>
-            You lose = Dealer takes your bet <br>
+            You lose = Dealer doesn't return your bet <br>
             You win = Dealer returns your bet x2
         </InfoSection>
     </main>
