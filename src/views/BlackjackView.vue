@@ -2,6 +2,7 @@
 import PlayButton from "../components/PlayButton.vue";
 import BetSelectButton from "../components/BetSelectButton.vue";
 import BlackjackCardTable from "../components/BlackjackCardTable.vue";
+import InfoSection from "../components/InfoSection.vue";
 
 export default {
     props: ["points"],
@@ -32,37 +33,39 @@ export default {
             continueButtonEnabled: false
         };
     },
-    components: { PlayButton, BetSelectButton, BlackjackCardTable },
+    components: { PlayButton, BetSelectButton, BlackjackCardTable, InfoSection },
     methods: {
         startGame() {
             this.selectedBet = Number(this.$refs.betSelect.$data.value);
+
+            if (!this.canPerformAction()) return;
+
+            this.$emit("changePoints", -this.selectedBet);
             this.playing = true;
 
             this.giveDealerCards();
             this.givePlayerCards();
         },
         hit() {
-            if (!this.canPerformAction() || this.playerHandValue > 20) return;
+            if (this.playerHandValue > 20) return;
 
             this.playerCards.push(this.fetchCard());
 
             this.playerHandValue = this.calculateHandValue(this.playerCards);
         },
         stand() {
-            if (!this.canPerformAction()) return;
-
             this.dealerHide = false;
             while(this.calculateHandValue(this.dealerCards) < 17) this.dealerCards.push(this.fetchCard());
 
             const dealerHandValue = this.calculateHandValue(this.dealerCards);
             this.dealerHandValue = dealerHandValue;
 
-            let lastReward = 0;
+            let lastReward = this.selectedBet;
             if(this.playerHandValue > 21 && dealerHandValue > 21);
-            else if(this.playerHandValue > 21) lastReward = -this.selectedBet;
-            else if(dealerHandValue > 21) lastReward = this.selectedBet;
-            else if(this.playerHandValue > dealerHandValue) lastReward = this.selectedBet;
-            else if(dealerHandValue > this.playerHandValue) lastReward = -this.selectedBet;
+            else if(this.playerHandValue > 21) lastReward -= this.selectedBet;
+            else if(dealerHandValue > 21) lastReward += this.selectedBet;
+            else if(this.playerHandValue > dealerHandValue) lastReward += this.selectedBet;
+            else if(dealerHandValue > this.playerHandValue) lastReward -= this.selectedBet;
 
             this.$emit("changePoints", lastReward);
             this.lastReward = lastReward;
@@ -71,6 +74,10 @@ export default {
             this.continueButtonEnabled = true;
         },
         startNewRound() {
+            if (!this.canPerformAction()) return;
+
+            this.$emit("changePoints", -this.selectedBet);
+
             this.continueButtonEnabled = false;
             this.dealerHandValue = -1;
             this.clearBothHands();
@@ -161,6 +168,13 @@ export default {
                 <PlayButton v-if="continueButtonEnabled" @click="startNewRound">Next Round</PlayButton>
             </div>
         </div>
+
+        <InfoSection>
+            Starting a new game or a new round = Dealer takes your bet <br> <br>
+            Tie = Dealer returns your bet <br>
+            You lose = Dealer takes your bet <br>
+            You win = Dealer returns your bet x2
+        </InfoSection>
     </main>
 </template>
 
