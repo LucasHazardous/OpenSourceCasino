@@ -142,7 +142,6 @@ export default {
 
 <template>
     <main>
-        <div id="warningLabel" v-if="!playing">Warning - this gamemode is currently at beta version!</div>
         <p id="lastReward">Last reward: {{ lastReward }}</p>
         <div id="options" v-if="!playing">
             <BetSelectButton :bets="blackjackBets" id="betSelect" ref="betSelect"></BetSelectButton>
@@ -174,15 +173,6 @@ main {
     margin-top: 1%;
     color: aquamarine;
     margin-top: 5%;
-}
-
-#warningLabel {
-    background-color: #eed202;
-    padding: 2rem;
-    width: 50%;
-    margin-left: 25%;
-    margin-top: 5%;
-    border-radius: 0.2rem;
 }
 
 #options {
