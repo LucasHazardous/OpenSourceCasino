@@ -11,7 +11,7 @@ export default {
             selectedBet: 0,
             lastReward: 0,
             blackjackBets: [25000, 50000],
-            deckCards: ['S 1', 'H 1', 'D 1', 'C 1', 'S 2',
+            deckCards: ['S 10', 'H 10', 'D 10', 'C 10', 'S 2',
                 'H 2', 'D 2', 'C 2', 'S 3', 'H 3', 'D 3',
                 'C 3', 'S 4', 'H 4', 'D 4', 'C 4', 'S 5',
                 'H 5', 'D 5', 'C 5', 'S 6', 'H 6', 'D 6',
@@ -87,7 +87,7 @@ export default {
             let aceCount = 0;
             let value = 0;
             for(let i = 0; i < arr.length; i++) {
-                const cardValue = arr[i][2];
+                const cardValue = arr[i].slice(2, 4);
 
                 if(cardValue == "A") aceCount++;
                 else if(!isNaN(cardValue)) value += Number(cardValue);
@@ -142,7 +142,6 @@ export default {
 
 <template>
     <main>
-        <div id="warningLabel" v-if="!playing">Warning - this gamemode is currently at beta version!</div>
         <p id="lastReward">Last reward: {{ lastReward }}</p>
         <div id="options" v-if="!playing">
             <BetSelectButton :bets="blackjackBets" id="betSelect" ref="betSelect"></BetSelectButton>
@@ -174,15 +173,6 @@ main {
     margin-top: 1%;
     color: aquamarine;
     margin-top: 5%;
-}
-
-#warningLabel {
-    background-color: #eed202;
-    padding: 2rem;
-    width: 50%;
-    margin-left: 25%;
-    margin-top: 5%;
-    border-radius: 0.2rem;
 }
 
 #options {
