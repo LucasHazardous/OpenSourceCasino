@@ -2,6 +2,7 @@
 import PlayButton from "../components/PlayButton.vue";
 import BetSelectButton from "../components/BetSelectButton.vue";
 import BlackjackCardTable from "../components/BlackjackCardTable.vue";
+import InfoSection from "../components/InfoSection.vue";
 
 export default {
     props: ["points"],
@@ -32,7 +33,7 @@ export default {
             continueButtonEnabled: false
         };
     },
-    components: { PlayButton, BetSelectButton, BlackjackCardTable },
+    components: { PlayButton, BetSelectButton, BlackjackCardTable, InfoSection },
     methods: {
         startGame() {
             this.selectedBet = Number(this.$refs.betSelect.$data.value);
@@ -161,6 +162,13 @@ export default {
                 <PlayButton v-if="continueButtonEnabled" @click="startNewRound">Next Round</PlayButton>
             </div>
         </div>
+
+        <InfoSection>
+            Starting a new game or a new round = Dealer takes your bet <br> <br>
+            Tie = Dealer returns your bet <br>
+            You lose = Dealer takes your bet <br>
+            You win = Dealer returns your bet x2
+        </InfoSection>
     </main>
 </template>
 
