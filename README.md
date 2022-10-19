@@ -4,7 +4,7 @@
 
 **I strongly recommend that you never play in a casino with real money!** 
 
-To start playing any gamemode simply navigate to the [website](https://lucashazardous.github.io/), choose game and have fun!
+To start playing any gamemode simply navigate to the [website](https://lucashazardous.github.io/OpenSourceCasino), choose game and have fun!
 
 ### This doesn't make any sense
 
