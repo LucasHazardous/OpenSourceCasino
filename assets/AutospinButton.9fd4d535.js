@@ -1,0 +1,1 @@
+import{_ as e,o,c as s,h as a,j as _}from"./index.8cf7fe92.js";const c={props:["autospinning"]};function u(t,p,n,r,i,d){return o(),s("button",{class:_(["autospinButton",n.autospinning?"enabledAutospin":""])},[a(t.$slots,"default",{},void 0,!0)],2)}const f=e(c,[["render",u],["__scopeId","data-v-874cfaa9"]]);export{f as A};
