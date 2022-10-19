@@ -37,33 +37,35 @@ export default {
     methods: {
         startGame() {
             this.selectedBet = Number(this.$refs.betSelect.$data.value);
+
+            if (!this.canPerformAction()) return;
+
+            this.$emit("changePoints", -this.selectedBet);
             this.playing = true;
 
             this.giveDealerCards();
             this.givePlayerCards();
         },
         hit() {
-            if (!this.canPerformAction() || this.playerHandValue > 20) return;
+            if (this.playerHandValue > 20) return;
 
             this.playerCards.push(this.fetchCard());
 
             this.playerHandValue = this.calculateHandValue(this.playerCards);
         },
         stand() {
-            if (!this.canPerformAction()) return;
-
             this.dealerHide = false;
             while(this.calculateHandValue(this.dealerCards) < 17) this.dealerCards.push(this.fetchCard());
 
             const dealerHandValue = this.calculateHandValue(this.dealerCards);
             this.dealerHandValue = dealerHandValue;
 
-            let lastReward = 0;
+            let lastReward = this.selectedBet;
             if(this.playerHandValue > 21 && dealerHandValue > 21);
-            else if(this.playerHandValue > 21) lastReward = -this.selectedBet;
-            else if(dealerHandValue > 21) lastReward = this.selectedBet;
-            else if(this.playerHandValue > dealerHandValue) lastReward = this.selectedBet;
-            else if(dealerHandValue > this.playerHandValue) lastReward = -this.selectedBet;
+            else if(this.playerHandValue > 21) lastReward -= this.selectedBet;
+            else if(dealerHandValue > 21) lastReward += this.selectedBet;
+            else if(this.playerHandValue > dealerHandValue) lastReward += this.selectedBet;
+            else if(dealerHandValue > this.playerHandValue) lastReward -= this.selectedBet;
 
             this.$emit("changePoints", lastReward);
             this.lastReward = lastReward;
@@ -72,6 +74,10 @@ export default {
             this.continueButtonEnabled = true;
         },
         startNewRound() {
+            if (!this.canPerformAction()) return;
+
+            this.$emit("changePoints", -this.selectedBet);
+
             this.continueButtonEnabled = false;
             this.dealerHandValue = -1;
             this.clearBothHands();
