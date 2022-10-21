@@ -167,10 +167,28 @@ export default {
         </div>
 
         <InfoSection>
-            Starting a new game or a new round = Dealer takes your bet <br> <br>
-            Tie = Dealer returns your bet <br>
-            You lose = Dealer doesn't return your bet <br>
-            You win = Dealer returns your bet x2
+            <table>
+                <tr>
+                    <th>Event</th>
+                    <th>Reward</th>
+                </tr>
+                <tr>
+                    <td>Round start</td>
+                    <td>-original bet</td>
+                </tr>
+                <tr>
+                    <td>Tie</td>
+                    <td>original bet</td>
+                </tr>
+                <tr>
+                    <td>Failure</td>
+                    <td>0</td>
+                </tr>
+                <tr>
+                    <td>Victory</td>
+                    <td>selected bet x2</td>
+                </tr>
+            </table>
         </InfoSection>
     </main>
 </template>
@@ -184,6 +202,7 @@ main {
     margin-top: 1%;
     color: aquamarine;
     margin-top: 5%;
+    margin-bottom: 2%;
 }
 
 #options {
@@ -203,5 +222,21 @@ main {
 
 h1 {
     color: aquamarine;
+}
+
+table {
+    border-collapse: collapse;
+    width: 100%;
+}
+
+td,
+th {
+    border: 1px solid black;
+    text-align: left;
+    padding: 0.5rem;
+}
+
+tr:nth-child(even) {
+    background-color: azure;
 }
 </style>
