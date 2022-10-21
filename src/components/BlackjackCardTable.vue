@@ -8,7 +8,7 @@ export default {
     <div class="cardTable">
         <div v-for="card in (dealerHide ? cards.slice(0, 1) : cards)" class="cardContainer">
             <div class="upValue">{{ card.slice(2, 4) }}</div>
-            <div class="img"><img :src="'/OpenSourceCasino/symbols/' + card[0] + '.png'"></div>
+            <div class="img" :style="card[0] == '♦' || card[0] == '♥' ? 'color: red;' : 'color: black;'">{{ card[0] }}</div>
             <div class="downValue">{{ card.slice(2, 4) }}</div>
         </div>
         <div v-if="dealerHide" class="cardContainer">
@@ -41,11 +41,12 @@ export default {
 .img {
     text-align: center;
     margin-top: 2rem;
+    font-size: large;
 }
 
 .imgUnknown {
-    height: 37.5px;
     margin-top: 2rem;
+    font-size: large;
 }
 
 .downValue {

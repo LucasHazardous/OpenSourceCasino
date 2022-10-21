@@ -12,15 +12,15 @@ export default {
             selectedBet: 0,
             lastReward: 0,
             blackjackBets: [25000, 50000],
-            deckCards: ['S 10', 'H 10', 'D 10', 'C 10', 'S 2',
-                'H 2', 'D 2', 'C 2', 'S 3', 'H 3', 'D 3',
-                'C 3', 'S 4', 'H 4', 'D 4', 'C 4', 'S 5',
-                'H 5', 'D 5', 'C 5', 'S 6', 'H 6', 'D 6',
-                'C 6', 'S 7', 'H 7', 'D 7', 'C 7', 'S 8',
-                'H 8', 'D 8', 'C 8', 'S 9', 'H 9', 'D 9',
-                'C 9', 'S A', 'H A', 'D A', 'C A', 'S J',
-                'H J', 'D J', 'C J', 'S Q', 'H Q', 'D Q',
-                'C Q', 'S K', 'H K', 'D K', 'C K'
+            deckCards: ['♠ 10', '♥ 10', '♦ 10', '♣ 10', '♠ 2',
+                '♥ 2', '♦ 2', '♣ 2', '♠ 3', '♥ 3', '♦ 3',
+                '♣ 3', '♠ 4', '♥ 4', '♦ 4', '♣ 4', '♠ 5',
+                '♥ 5', '♦ 5', '♣ 5', '♠ 6', '♥ 6', '♦ 6',
+                '♣ 6', '♠ 7', '♥ 7', '♦ 7', '♣ 7', '♠ 8',
+                '♥ 8', '♦ 8', '♣ 8', '♠ 9', '♥ 9', '♦ 9',
+                '♣ 9', '♠ A', '♥ A', '♦ A', '♣ A', '♠ J',
+                '♥ J', '♦ J', '♣ J', '♠ Q', '♥ Q', '♦ Q',
+                '♣ Q', '♠ K', '♥ K', '♦ K', '♣ K'
             ],
             dealerCards: [],
             playerCards: [],
@@ -38,7 +38,7 @@ export default {
         startGame() {
             this.selectedBet = Number(this.$refs.betSelect.$data.value);
 
-            if (!this.canPerformAction()) return;
+            if (this.points - this.selectedBet < 0) return;
 
             this.$emit("changePoints", -this.selectedBet);
             this.playing = true;
@@ -74,7 +74,7 @@ export default {
             this.continueButtonEnabled = true;
         },
         startNewRound() {
-            if (!this.canPerformAction()) return;
+            if (this.points - this.selectedBet < 0) return;
 
             this.$emit("changePoints", -this.selectedBet);
 
@@ -86,9 +86,6 @@ export default {
             this.giveDealerCards();
             this.givePlayerCards();
             this.enableButtons = true;
-        },
-        canPerformAction() {
-            return this.points - this.selectedBet >= 0;
         },
         calculateHandValue(arr) {
             let aceCount = 0;
@@ -170,10 +167,28 @@ export default {
         </div>
 
         <InfoSection>
-            Starting a new game or a new round = Dealer takes your bet <br> <br>
-            Tie = Dealer returns your bet <br>
-            You lose = Dealer doesn't return your bet <br>
-            You win = Dealer returns your bet x2
+            <table>
+                <tr>
+                    <th>Event</th>
+                    <th>Reward</th>
+                </tr>
+                <tr>
+                    <td>Round start</td>
+                    <td>-original bet</td>
+                </tr>
+                <tr>
+                    <td>Tie</td>
+                    <td>original bet</td>
+                </tr>
+                <tr>
+                    <td>Failure</td>
+                    <td>0</td>
+                </tr>
+                <tr>
+                    <td>Victory</td>
+                    <td>selected bet x2</td>
+                </tr>
+            </table>
         </InfoSection>
     </main>
 </template>
@@ -187,6 +202,7 @@ main {
     margin-top: 1%;
     color: aquamarine;
     margin-top: 5%;
+    margin-bottom: 2%;
 }
 
 #options {
@@ -206,5 +222,21 @@ main {
 
 h1 {
     color: aquamarine;
+}
+
+table {
+    border-collapse: collapse;
+    width: 100%;
+}
+
+td,
+th {
+    border: 1px solid black;
+    text-align: left;
+    padding: 0.5rem;
+}
+
+tr:nth-child(even) {
+    background-color: azure;
 }
 </style>
