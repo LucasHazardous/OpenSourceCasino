@@ -38,7 +38,7 @@ export default {
         startGame() {
             this.selectedBet = Number(this.$refs.betSelect.$data.value);
 
-            if (!this.canPerformAction()) return;
+            if (this.points - this.selectedBet < 0) return;
 
             this.$emit("changePoints", -this.selectedBet);
             this.playing = true;
@@ -74,7 +74,7 @@ export default {
             this.continueButtonEnabled = true;
         },
         startNewRound() {
-            if (!this.canPerformAction()) return;
+            if (this.points - this.selectedBet < 0) return;
 
             this.$emit("changePoints", -this.selectedBet);
 
@@ -86,9 +86,6 @@ export default {
             this.giveDealerCards();
             this.givePlayerCards();
             this.enableButtons = true;
-        },
-        canPerformAction() {
-            return this.points - this.selectedBet >= 0;
         },
         calculateHandValue(arr) {
             let aceCount = 0;
