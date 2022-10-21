@@ -19,7 +19,7 @@ export default {
 
 <style scoped>
 main {
-    padding: 10%;
+    padding: 5%;
 }
 
 #infoButton {
@@ -41,5 +41,6 @@ main {
     background-color: #d7ffc0;
     width: 80%;
     margin-left: 10%;
+    border-radius: 0.3rem;
 }
 </style>
