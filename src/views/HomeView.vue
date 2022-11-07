@@ -1,71 +1,30 @@
-<script setup>
-defineProps({
-  games: {
-    type: Array,
-    required: true,
+<template>
+  <main>
+    <div
+      class="w-screen h-screen flex flex-wrap gap-10 items-center justify-center"
+    >
+      <GameCard v-for="game in games" :key="game.name" :game="game" />
+    </div>
+  </main>
+</template>
+
+<script>
+import { defineComponent } from "vue";
+import GameCard from "@/components/GameCard.vue";
+
+export default defineComponent({
+  name: "HomeView",
+  title: "Home",
+  components: {
+    GameCard,
+  },
+  props: {
+    games: {
+      type: Array,
+      required: true,
+    },
   },
 });
 </script>
 
-<template>
-  <main>
-    <a class="game" v-for="game in games" :href="'/OpenSourceCasino/#/' + game">
-      <div>{{ game }}</div>
-    </a>
-  </main>
-</template>
-
-<style scoped>
-main {
-  display: grid;
-  column-gap: 2%;
-  row-gap: 20%;
-  grid-template-columns: repeat(3, 1fr);
-  padding: 10%;
-  font-size: 80%;
-}
-
-.game {
-  padding: 5%;
-  background-color: #121212;
-  border-radius: 5%;
-
-  animation: 5s rotate linear infinite;
-
-  min-height: 1rem;
-  max-height: 10%;
-}
-
-.game:hover {
-  border: 0.5rem solid;
-  border-image: conic-gradient(
-      from var(--angle),
-      red,
-      yellow,
-      lime,
-      aqua,
-      blue,
-      magenta,
-      red
-    )
-    1;
-}
-
-@keyframes rotate {
-  to {
-    --angle: 360deg;
-  }
-}
-
-@property --angle {
-  syntax: "<angle>";
-  initial-value: 0deg;
-  inherits: false;
-}
-
-a {
-  text-decoration: none;
-  color: aquamarine;
-  background-color: #121212;
-}
-</style>
+<style scoped></style>
