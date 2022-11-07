@@ -1,37 +1,35 @@
-import {
-  createRouter,
-  createWebHashHistory
-} from 'vue-router'
-import HomeView from '../views/HomeView.vue'
+import { createRouter, createWebHashHistory } from "vue-router";
+import HomeView from "../views/HomeView.vue";
 
 const router = createRouter({
   history: createWebHashHistory("/"),
-  routes: [{
-      path: '/',
-      name: 'home',
-      component: HomeView
+  routes: [
+    {
+      path: "/",
+      name: "home",
+      component: HomeView,
     },
     {
-      path: '/about',
-      name: 'about',
-      component: () => import('../views/AboutView.vue')
+      path: "/about",
+      name: "about",
+      component: () => import("../views/AboutView.vue"),
     },
     {
-      path: '/slots',
-      name: 'slots',
-      component: () => import('../views/SlotsView.vue')
+      path: "/slots",
+      name: "slots",
+      component: () => import("../views/SlotsView.vue"),
     },
     {
-      path: '/roulette',
-      name: 'roulette',
-      component: () => import('../views/RouletteView.vue')
+      path: "/roulette",
+      name: "roulette",
+      component: () => import("../views/RouletteView.vue"),
     },
     {
-      path: '/blackjack',
-      name: 'blackjack',
-      component: () => import('../views/BlackjackView.vue')
-    }
-  ]
-})
+      path: "/blackjack",
+      name: "blackjack",
+      component: () => import("../views/BlackjackView.vue"),
+    },
+  ],
+});
 
-export default router
+export default router;

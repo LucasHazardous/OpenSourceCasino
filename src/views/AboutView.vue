@@ -1,12 +1,11 @@
 <template>
   <main>
-    <h2>
-      Welcome to OSC!
-    </h2>
+    <h2>Welcome to OSC!</h2>
     <p>
-      This "casino" is made for fun only! It is just a game and no real money is involved.
-      What is the purpose of this? To enjoy games from a casino while playing for fake points.
-      Goal of this project is to make these games as satisfying as possible and let people have fun without losing money.
+      This "casino" is made for fun only! It is just a game and no real money is
+      involved. What is the purpose of this? To enjoy games from a casino while
+      playing for fake points. Goal of this project is to make these games as
+      satisfying as possible and let people have fun without losing money.
     </p>
   </main>
 </template>

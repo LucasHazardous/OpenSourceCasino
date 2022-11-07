@@ -1,7 +1,12 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 * {
   padding: 0;
   margin: 0;
-  font-family: Verdana, sans-serif;
+  font-family: "Comfortaa", cursive;
+  /* font-family: 'Montserrat', sans-serif; */
   -webkit-touch-callout: none;
   -webkit-user-select: none;
   -khtml-user-select: none;
@@ -24,6 +29,7 @@ body {
   scrollbar-width: none;
 }
 
-button, select {
+button,
+select {
   outline: none;
 }

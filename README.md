@@ -1,8 +1,8 @@
 # Welcome to **Open Source Casino**!
 
-> A place where you can enjoy playing casino games with donuts (*fake money*)!
+> A place where you can enjoy playing casino games with donuts (_fake money_)!
 
-**I strongly recommend that you never play in a casino with real money!** 
+**I strongly recommend that you never play in a casino with real money!**
 
 To start playing any gamemode simply navigate to the [website](https://lucashazardous.github.io/OpenSourceCasino), choose game and have fun!
 

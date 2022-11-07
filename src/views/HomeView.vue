@@ -2,19 +2,18 @@
 defineProps({
   games: {
     type: Array,
-    required: true
-  }
-})
+    required: true,
+  },
+});
 </script>
 
 <template>
   <main>
-    <a class="game" v-for="game in games" :href="'/OpenSourceCasino/#/'+game">
+    <a class="game" v-for="game in games" :href="'/OpenSourceCasino/#/' + game">
       <div>{{ game }}</div>
     </a>
   </main>
 </template>
-
 
 <style scoped>
 main {
@@ -39,17 +38,27 @@ main {
 
 .game:hover {
   border: 0.5rem solid;
-  border-image: conic-gradient(from var(--angle), red, yellow, lime, aqua, blue, magenta, red) 1;
+  border-image: conic-gradient(
+      from var(--angle),
+      red,
+      yellow,
+      lime,
+      aqua,
+      blue,
+      magenta,
+      red
+    )
+    1;
 }
 
 @keyframes rotate {
-	to {
-		--angle: 360deg;
-	}
+  to {
+    --angle: 360deg;
+  }
 }
 
 @property --angle {
-  syntax: '<angle>';
+  syntax: "<angle>";
   initial-value: 0deg;
   inherits: false;
 }
