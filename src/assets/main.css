@@ -15,9 +15,11 @@
   user-select: none;
 }
 
+/* temporary mesh gradient until I make a better one */
 html,
 body {
-  background-color: #1f1f1f;
+  background-color: rgb(88, 28, 135);
+  background-image: radial-gradient(at 85% 46%, rgb(28, 25, 23) 0, transparent 76%), radial-gradient(at 29% 61%, rgb(59, 130, 246) 0, transparent 65%), radial-gradient(at 12% 27%, rgb(17, 24, 39) 0, transparent 99%), radial-gradient(at 17% 22%, rgb(55, 65, 81) 0, transparent 50%), radial-gradient(at 35% 73%, rgb(7, 89, 133) 0, transparent 28%), radial-gradient(at 23% 89%, rgb(244, 114, 182) 0, transparent 57%);
 }
 
 body::-webkit-scrollbar {
