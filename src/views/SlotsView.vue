@@ -1,9 +1,6 @@
 <script>
 import Slot from "../components/Slot.vue";
-import PlayButton from "../components/PlayButton.vue";
 import BetSelectButton from "../components/BetSelectButton.vue";
-import InfoSection from "../components/InfoSection.vue";
-import AutospinButton from "../components/AutospinButton.vue";
 
 export default {
   props: ["points"],
@@ -17,16 +14,17 @@ export default {
       lastPlacedBet: 0,
       lastReward: 0,
       autospinning: false,
+      buttonSound: new Audio("spin.mp3"),
     };
   },
   components: {
     Slot,
-    PlayButton,
     BetSelectButton,
-    InfoSection,
-    AutospinButton,
   },
   methods: {
+    playButtonSound() {
+      this.buttonSound.play();
+    },
     spinSlots(slotCounter, rewards = []) {
       if (slotCounter == 1) {
         if (this.spinning) return;
@@ -81,149 +79,146 @@ export default {
 </script>
 
 <template>
-  <main>
-    <p id="lastReward">Last reward: {{ lastReward }}</p>
-    <div id="slotSpace">
-      <Slot
-        v-for="i in slotAmount"
-        :slotValues="slotValues"
-        :ref="String('slot' + i)"
-        class="slot"
-      ></Slot>
-    </div>
-    <div id="options">
-      <BetSelectButton
-        :bets="slotBets"
-        id="betSelect"
-        ref="betSelect"
-      ></BetSelectButton>
-      <PlayButton
-        :style="
-          spinning || autospinning
-            ? 'pointer-events: none; opacity: 0.2'
-            : 'pointer-events: auto'
-        "
-        @click="spinSlots(1)"
-        ref="spinButton"
-        >Spin</PlayButton
-      >
-      <AutospinButton
-        @click="autospinning = !autospinning"
-        :autospinning="autospinning"
-        id="autospinButton"
-      >
-        Autospin</AutospinButton
-      >
-    </div>
+  <main
+    class="flex h-screen w-screen justify-center items-center transition-all"
+  >
+    <div class="flex flex-col w-2/3 items-center gap-5">
+      <div class="flex flex-col items-center">
+        <h2 class="text-[2em]">Spin</h2>
+        <p id="lastReward" class="font-mono">Last reward: {{ lastReward }}</p>
+      </div>
+      <div id="slotSpace" class="pt-3 flex justify-center gap-5 w-full">
+        <Slot
+          v-for="i in slotAmount"
+          :slotValues="slotValues"
+          :ref="String('slot' + i)"
+          class="slot"
+        />
+      </div>
+      <div id="options" class="flex gap-3 trans">
+        <BetSelectButton
+          :bets="slotBets"
+          id="betSelect"
+          ref="betSelect"
+        ></BetSelectButton>
 
-    <InfoSection>
-      <h2>Loot table</h2>
-      <table>
-        <tr>
-          <th>Result</th>
-          <th>Theoretical Chance</th>
-          <th>Reward</th>
-        </tr>
-        <tr>
-          <td>$$$</td>
-          <td>
-            {{
-              (
-                (1 / Math.pow(this.slotValues.length, this.slotAmount)) *
-                100
-              ).toFixed(2)
-            }}%
-          </td>
-          <td>original bet x 5</td>
-        </tr>
-        <tr>
-          <td>777</td>
-          <td>
-            {{
-              (
-                (1 / Math.pow(this.slotValues.length, this.slotAmount)) *
-                100
-              ).toFixed(2)
-            }}%
-          </td>
-          <td>original bet x 7</td>
-        </tr>
-        <tr>
-          <td>at least two =</td>
-          <td>
-            {{
-              (
-                (1 -
-                  (Math.pow(this.slotValues.length - 1, this.slotAmount) +
-                    Math.pow(this.slotValues.length - 1, this.slotAmount - 1) *
-                      this.slotAmount) /
-                    Math.pow(this.slotValues.length, this.slotAmount)) *
-                100
-              ).toFixed(2)
-            }}%
-          </td>
-          <td>original bet x 2</td>
-        </tr>
-      </table>
-    </InfoSection>
+        <div class="btn-group btn-group-horizontal">
+          <button
+            class="btn btn-primary transition-all w-1/2"
+            @click="
+              spinSlots(1);
+              playButtonSound();
+            "
+            ref="spinButton"
+          >
+            {{ spinning ? "Spinning..." : "Spin" }}
+          </button>
+          <button
+            class="btn"
+            @click="autospinning = !autospinning"
+            id="autospinButton"
+          >
+            {{ autospinning ? "Stop" : "Autospin" }}
+          </button>
+        </div>
+      </div>
+      <div tabindex="0" class="collapse rounded-box">
+        <div class="collapse-title text-2xl font-medium text-center p-5">
+          Loot chances - click
+        </div>
+        <div class="collapse-content">
+          <div class="stats shadow">
+            <div class="stat">
+              <div class="stat-figure text-secondary">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  class="inline-block w-8 h-8 stroke-current"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+                  ></path>
+                </svg>
+              </div>
+              <div class="stat-title">$$$</div>
+              <div class="stat-value">
+                {{
+                  (
+                    (1 / Math.pow(this.slotValues.length, this.slotAmount)) *
+                    100
+                  ).toFixed(2)
+                }}%
+              </div>
+              <div class="stat-desc">reward: original bet x 5</div>
+            </div>
+            <div class="stat">
+              <div class="stat-figure text-secondary">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  class="inline-block w-8 h-8 stroke-current"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4"
+                  ></path>
+                </svg>
+              </div>
+              <div class="stat-title">777</div>
+              <div class="stat-value">
+                {{
+                  (
+                    (1 / Math.pow(this.slotValues.length, this.slotAmount)) *
+                    100
+                  ).toFixed(2)
+                }}%
+              </div>
+              <div class="stat-desc">reward: original bet x 7</div>
+            </div>
+            <div class="stat">
+              <div class="stat-figure text-secondary">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  class="inline-block w-8 h-8 stroke-current"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M5 8h14M5 8a2 2 0 110-4h14a2 2 0 110 4M5 8v10a2 2 0 002 2h10a2 2 0 002-2V8m-9 4h4"
+                  ></path>
+                </svg>
+              </div>
+              <div class="stat-title">at least two ==</div>
+              <div class="stat-value">
+                {{
+                  (
+                    (1 -
+                      (Math.pow(this.slotValues.length - 1, this.slotAmount) +
+                        Math.pow(
+                          this.slotValues.length - 1,
+                          this.slotAmount - 1
+                        ) *
+                          this.slotAmount) /
+                        Math.pow(this.slotValues.length, this.slotAmount)) *
+                    100
+                  ).toFixed(2)
+                }}%
+              </div>
+              <div class="stat-desc">reward: original bet x 2</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   </main>
 </template>
-
-<style scoped>
-main {
-  text-align: center;
-}
-
-#lastReward {
-  margin-top: 1%;
-  color: aquamarine;
-}
-
-#slotSpace {
-  margin-top: 10%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.slot {
-  display: inline-block;
-  padding: 10%;
-  margin: 1%;
-}
-
-#options {
-  margin-top: 10%;
-  position: relative;
-  display: grid;
-  column-gap: 10%;
-  grid-template-columns: repeat(3, 1fr);
-}
-
-#autospinButton {
-  margin-right: 5%;
-}
-
-#betSelect {
-  display: flex;
-  margin-left: 5%;
-  width: 100%;
-  cursor: pointer;
-}
-
-table {
-  border-collapse: collapse;
-  width: 100%;
-}
-
-td,
-th {
-  border: 1px solid black;
-  text-align: left;
-  padding: 0.5rem;
-}
-
-tr:nth-child(even) {
-  background-color: azure;
-}
-</style>

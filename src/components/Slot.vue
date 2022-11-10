@@ -5,12 +5,14 @@ export default {
     spin(spinCount) {
       const slotValueElement = this.$refs.slotValue;
       const slotValues = this.$props.slotValues;
-      slotValueElement.style.background = "#d7ffc0";
+      slotValueElement.classList.add("spinning");
+      slotValueElement.classList.remove("spun");
 
       return new Promise((resolve, reject) => {
         function spinRec() {
           if (spinCount <= 0) {
-            slotValueElement.style.background = "#b4e995";
+            slotValueElement.classList.add("spun");
+            slotValueElement.classList.remove("spinning");
             return resolve(slotValueElement.innerText);
           }
           slotValueElement.innerText =
@@ -25,19 +27,21 @@ export default {
 </script>
 
 <template>
-  <div ref="slotValue" id="slotValue">$</div>
+  <div
+    ref="slotValue"
+    id="slotValue"
+    class="text-center w-14 bg-neutral text-primary p-5 rounded-xl font-black text-xl"
+  >
+    $
+  </div>
 </template>
 
 <style scoped>
-#slotValue {
-  color: azure;
-  background-color: #b4e995;
-  border: 3px solid #000000;
-  font-size: 110%;
-  border-radius: 0.7rem;
-  width: 1%;
-  height: 1%;
-  font-weight: 900;
-  color: black;
+.spinning {
+  @apply bg-accent transition-all;
+}
+
+.spun {
+  @apply bg-neutral ring-1 ring-offset-accent transition-all;
 }
 </style>
