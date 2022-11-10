@@ -9,14 +9,14 @@ defineProps({
 
 <template>
   <nav
-    class="fixed px-20 py-3 bg-transparent w-screen flex items-center justify-between"
+    class="fixed px-20 py-5 bg-transparent w-screen flex items-center justify-between"
   >
     <div id="menu" class="flex items-center justify-between w-1/4">
-      <a class="font-semibold text-2xl" href="/OpenSourceCasino"
+      <a class="font-semibold text-2xl" href="/OpenSourceCasino/"
         >Open Source Casino</a
       >
       <a
-        class="font-medium text-xl hover:text-primary"
+        class="font-medium text-xl hover:text-primary transition-colors"
         href="/OpenSourceCasino/#/about"
         >About</a
       >
