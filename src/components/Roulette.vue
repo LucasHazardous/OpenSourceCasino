@@ -40,7 +40,7 @@ export default {
       return new Promise((resolve, reject) => {
         function spinRec(moveDelay) {
           if (moveDelay >= maxDelay) {
-            return resolve(i % 2 == 0 ? "black" : "red");
+            return resolve(i % 2 == 0 ? "dark-blue" : "light-blue");
           }
           drawWheelWithBall(size, r, centerX, centerY, i++);
           setTimeout(

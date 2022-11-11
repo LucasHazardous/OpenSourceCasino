@@ -10,7 +10,7 @@ export default {
       autospinning: false,
       lastReward: 0,
       spinning: false,
-      colors: ["red", "black"],
+      colors: ["dark-blue", "light-blue"],
       buttonSound: new Audio("spin.mp3"),
     };
   },
