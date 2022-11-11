@@ -72,7 +72,7 @@ export default {
       dealerHide: true,
       playerHandValue: 0,
       cardsInPlay: [],
-      enableButtons: true,
+      enableButtons: false,
       dealerHandValue: -1,
       continueButtonEnabled: false,
     };
@@ -81,7 +81,7 @@ export default {
   methods: {
     startGame() {
       this.selectedBet = Number(this.$refs.betSelect.$data.value);
-
+      this.enableButtons = true;
       if (this.points - this.selectedBet < 0) return;
 
       this.$emit("changePoints", -this.selectedBet);
@@ -195,110 +195,101 @@ export default {
 </script>
 
 <template>
-  <main>
-    <p id="lastReward">Last reward: {{ lastReward }}</p>
-    <div id="options" v-if="!playing">
-      <BetSelectButton
-        :bets="blackjackBets"
-        id="betSelect"
-        ref="betSelect"
-      ></BetSelectButton>
-
-      <PlayButton @click="startGame">Play</PlayButton>
-    </div>
-
-    <div id="game" v-if="playing">
-      <h1>{{ dealerHandValue < 0 ? "?" : dealerHandValue }}</h1>
-      <BlackjackCardTable
-        :dealerHide="dealerHide"
-        :cards="dealerCards"
-      ></BlackjackCardTable>
-      <BlackjackCardTable
-        :dealerHide="false"
-        :cards="playerCards"
-      ></BlackjackCardTable>
-      <h1>{{ playerHandValue }}</h1>
-
-      <div id="options">
-        <PlayButton v-if="enableButtons" @click="hit">Hit</PlayButton>
-        <PlayButton v-if="enableButtons" @click="stand">Stand</PlayButton>
-        <PlayButton v-if="continueButtonEnabled" @click="startNewRound"
-          >Next Round</PlayButton
-        >
+  <main
+    class="flex flex-col min-h-screen sm:h-screen w-screen justify-center items-center transition-all"
+  >
+    <div
+      class="flex flex-col sm:flex-row gap-5 w-full sm:w-2/3 h-auto sm:h-1/2 justify-center transition-transform"
+    >
+      <div class="flex flex-col sm:w-1/3 justify-center items-center gap-5">
+        <div class="flex flex-col items-center">
+          <h2 class="text-[2em]">Blackjack</h2>
+          <p id="lastReward" class="font-mono">Last reward: {{ lastReward }}</p>
+        </div>
+        <div class="flex flex-col sm:flex-row gap-5 transition-all">
+          <BetSelectButton
+            :class="playing ? 'select-disabled' : 'select-active'"
+            :bets="blackjackBets"
+            id="betSelect"
+            ref="betSelect"
+          />
+          <button
+            class="btn btn-primary transition-all"
+            @click="startGame"
+            ref="spinButton"
+            :disabled="playing"
+          >
+            Play
+          </button>
+        </div>
+        <div class="flex flex-col sm:flex-row gap-5 transition-all">
+          <div v-if="enableButtons" class="btn-group btn-group-horizontal">
+            <button class="btn" @click="hit" ref="spinButton">Hit</button>
+            <button class="btn" @click="stand" id="autospinButton">
+              Stand
+            </button>
+          </div>
+          <button
+            v-if="continueButtonEnabled"
+            class="btn btn-primary transition-all"
+            @click="startNewRound"
+            ref="spinButton"
+          >
+            Next Round
+          </button>
+        </div>
+      </div>
+      <div
+        id="game"
+        class="flex flex-col items-center w-full sm:w-1/2 gap-3"
+        v-if="playing"
+      >
+        <h1>{{ dealerHandValue < 0 ? "?" : dealerHandValue }}</h1>
+        <BlackjackCardTable
+          :dealerHide="dealerHide"
+          :cards="dealerCards"
+        ></BlackjackCardTable>
+        <BlackjackCardTable
+          :dealerHide="false"
+          :cards="playerCards"
+        ></BlackjackCardTable>
+        <h1>{{ playerHandValue }}</h1>
       </div>
     </div>
-
-    <InfoSection>
-      <table>
-        <tr>
-          <th>Event</th>
-          <th>Reward</th>
-        </tr>
-        <tr>
-          <td>Round start</td>
-          <td>-original bet</td>
-        </tr>
-        <tr>
-          <td>Tie</td>
-          <td>original bet</td>
-        </tr>
-        <tr>
-          <td>Failure</td>
-          <td>0</td>
-        </tr>
-        <tr>
-          <td>Victory</td>
-          <td>selected bet x2</td>
-        </tr>
-      </table>
-    </InfoSection>
+    <div tabindex="0" class="collapse rounded-box">
+      <div class="collapse-title text-2xl font-medium text-center p-5">
+        Gain per event
+      </div>
+      <div class="collapse-content">
+        <div class="overflow-x-auto">
+          <table class="table w-full">
+            <thead>
+              <tr>
+                <th>Event</th>
+                <th>Reward</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Round start</td>
+                <td>-original bet</td>
+              </tr>
+              <tr>
+                <td>Tie</td>
+                <td>original bet</td>
+              </tr>
+              <tr>
+                <td>Failure</td>
+                <td>0</td>
+              </tr>
+              <tr>
+                <td>Victory</td>
+                <td>original bet x2</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
   </main>
 </template>
-
-<style scoped>
-main {
-  text-align: center;
-}
-
-#lastReward {
-  margin-top: 1%;
-  color: aquamarine;
-  margin-top: 5%;
-  margin-bottom: 2%;
-}
-
-#options {
-  margin-top: 10%;
-  position: relative;
-  display: grid;
-  column-gap: 10%;
-  grid-template-columns: repeat(2, 1fr);
-  margin: 2%;
-}
-
-#betSelect {
-  display: flex;
-  width: 100%;
-  cursor: pointer;
-}
-
-h1 {
-  color: aquamarine;
-}
-
-table {
-  border-collapse: collapse;
-  width: 100%;
-}
-
-td,
-th {
-  border: 1px solid black;
-  text-align: left;
-  padding: 0.5rem;
-}
-
-tr:nth-child(even) {
-  background-color: azure;
-}
-</style>
