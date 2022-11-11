@@ -33,7 +33,7 @@ export default {
 <template>
   <NavBar :points="points" />
   <RouterView
-    class="h-screen"
+    class="h-full"
     :games="games"
     @changePoints="changePoints"
     :points="points"

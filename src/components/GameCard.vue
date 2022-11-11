@@ -1,6 +1,8 @@
 <template>
-  <div class="card w-96 bg-base-100 shadow-xl">
-    <figure><img class="" :src="game.image" alt="Shoes" /></figure>
+  <div class="card sm:max-w-[25vw] bg-base-100 shadow-xl">
+    <figure class="h-52 overflow-hidden">
+      <img class="object-cover" :src="game.image" alt="Shoes" />
+    </figure>
     <div class="card-body">
       <h2 class="card-title">{{ game.name }}</h2>
       <p>{{ game.description }}</p>

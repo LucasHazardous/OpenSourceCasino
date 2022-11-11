@@ -1,7 +1,7 @@
 <template>
   <main>
     <div
-      class="w-screen h-screen flex flex-wrap gap-10 items-center justify-center"
+      class="pt-44 sm:pt-0 px-10 w-screen min-h-screen flex flex-col sm:flex-row flex-wrap gap-10 items-center justify-center"
     >
       <GameCard v-for="game in games" :key="game.name" :game="game" />
     </div>

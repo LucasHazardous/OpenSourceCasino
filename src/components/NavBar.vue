@@ -9,7 +9,7 @@ defineProps({
 
 <template>
   <nav
-    class="fixed px-20 py-5 bg-transparent w-screen flex items-center justify-between"
+    class="fixed px-20 py-5 bg-transparent w-screen flex items-center justify-between z-50"
   >
     <div id="menu" class="flex items-center justify-between w-1/4">
       <a class="font-semibold text-2xl" href="/OpenSourceCasino/"

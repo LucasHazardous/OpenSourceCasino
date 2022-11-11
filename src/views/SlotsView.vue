@@ -80,11 +80,11 @@ export default {
 
 <template>
   <main
-    class="flex h-screen w-screen justify-center items-center transition-all"
+    class="flex min-h-screen w-screen justify-center items-center transition-all"
   >
     <div class="flex flex-col w-2/3 items-center gap-5">
       <div class="flex flex-col items-center">
-        <h2 class="text-[2em]">Spin</h2>
+        <h2 class="text-[2em]">Slots</h2>
         <p id="lastReward" class="font-mono">Last reward: {{ lastReward }}</p>
       </div>
       <div id="slotSpace" class="pt-3 flex justify-center gap-5 w-full">

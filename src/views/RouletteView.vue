@@ -61,7 +61,7 @@ export default {
 
 <template>
   <main
-    class="flex h-screen w-screen justify-center items-center transition-all"
+    class="flex min-h-screen w-screen justify-center items-center transition-all"
   >
     <div class="flex flex-col w-2/3 items-center gap-5">
       <div class="flex flex-col items-center">
