@@ -77,7 +77,7 @@ export default {
       this.drawFreshWheel(size, size * this.canvasRadius, size / 2, size / 2);
     },
     drawFreshWheel(size, r, centerX, centerY) {
-      this.canvasCtx.fillStyle = "black";
+      this.canvasCtx.fillStyle = "#191D24";
       this.canvasCtx.beginPath();
       this.canvasCtx.arc(centerX, centerY, r, 0, 2 * Math.PI, false);
       this.canvasCtx.fill();
@@ -93,8 +93,8 @@ export default {
         radianSum += current;
         this.canvasCtx.lineTo(centerX, centerY);
 
-        if (i % 2 == 0) this.canvasCtx.fillStyle = "red";
-        else this.canvasCtx.fillStyle = "black";
+        if (i % 2 == 0) this.canvasCtx.fillStyle = "#6184D8";
+        else this.canvasCtx.fillStyle = "#19297C";
 
         this.canvasCtx.fill();
       }

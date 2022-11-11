@@ -1,9 +1,6 @@
 <script>
-import PlayButton from "../components/PlayButton.vue";
 import BetSelectButton from "../components/BetSelectButton.vue";
-import AutospinButton from "../components/AutospinButton.vue";
 import Roulette from "../components/Roulette.vue";
-import InfoSection from "../components/InfoSection.vue";
 
 export default {
   props: ["points"],
@@ -14,16 +11,17 @@ export default {
       lastReward: 0,
       spinning: false,
       colors: ["red", "black"],
+      buttonSound: new Audio("spin.mp3"),
     };
   },
   components: {
-    PlayButton,
     BetSelectButton,
-    AutospinButton,
     Roulette,
-    InfoSection,
   },
   methods: {
+    playButtonSound() {
+      this.buttonSound.play();
+    },
     spinRoulette() {
       if (this.spinning) return;
 
@@ -62,112 +60,95 @@ export default {
 </script>
 
 <template>
-  <main>
-    <p id="lastReward">Last reward: {{ lastReward }}</p>
-    <Roulette ref="roulette"></Roulette>
-    <div id="options">
-      <BetSelectButton
-        :bets="rouletteBets"
-        id="betSelect"
-        ref="betSelect"
-      ></BetSelectButton>
+  <main
+    class="flex h-screen w-screen justify-center items-center transition-all"
+  >
+    <div class="flex flex-col w-2/3 items-center gap-5">
+      <div class="flex flex-col items-center">
+        <h2 class="text-[2em]">Roulette</h2>
+        <p id="lastReward" class="font-mono">Last reward: {{ lastReward }}</p>
+      </div>
+      <Roulette class="!m-0 p-5" ref="roulette"></Roulette>
+      <div id="options" class="flex flex-col sm:flex-row gap-5 transition-all">
+        <BetSelectButton
+          :bets="rouletteBets"
+          id="betSelect"
+          ref="betSelect"
+        ></BetSelectButton>
 
-      <PlayButton
-        :style="
-          spinning || autospinning
-            ? 'pointer-events: none; opacity: 0.2'
-            : 'pointer-events: auto'
-        "
-        @click="spinRoulette"
-        >Spin</PlayButton
-      >
-      <AutospinButton
-        @click="autospinning = !autospinning"
-        :autospinning="autospinning"
-        id="autospinButton"
-      >
-        Autospin</AutospinButton
-      >
+        <div class="btn-group btn-group-horizontal">
+          <button
+            class="btn btn-primary transition-all"
+            @click="spinRoulette"
+            ref="spinButton"
+          >
+            {{ spinning ? "Spinning..." : "Spin" }}
+          </button>
+          <button
+            class="btn"
+            @click="autospinning = !autospinning"
+            id="autospinButton"
+          >
+            {{ autospinning ? "Stop" : "Autospin" }}
+          </button>
+        </div>
+
+        <BetSelectButton
+          title="Choose color"
+          :bets="colors"
+          id="colorSelect"
+          ref="colorSelect"
+        ></BetSelectButton>
+      </div>
+      <div tabindex="0" class="collapse rounded-box">
+        <div class="collapse-title text-2xl font-medium text-center p-5">
+          Loot chances - click
+        </div>
+        <div class="collapse-content">
+          <div class="stats shadow">
+            <div class="stat">
+              <div class="stat-figure text-secondary">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  class="inline-block w-8 h-8 stroke-current"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+                  ></path>
+                </svg>
+              </div>
+              <div class="stat-title">Red</div>
+              <div class="stat-value">50%</div>
+              <div class="stat-desc">reward: original bet x 1.5</div>
+            </div>
+            <div class="stat">
+              <div class="stat-figure text-secondary">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  class="inline-block w-8 h-8 stroke-current"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4"
+                  ></path>
+                </svg>
+              </div>
+              <div class="stat-title">Black</div>
+              <div class="stat-value">50%</div>
+              <div class="stat-desc">reward: original bet x 1.5</div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
-    <BetSelectButton
-      :style="
-        spinning || autospinning
-          ? 'pointer-events: none; opacity: 0.2'
-          : 'pointer-events: auto'
-      "
-      :bets="colors"
-      id="colorSelect"
-      ref="colorSelect"
-    ></BetSelectButton>
-    <InfoSection>
-      <h2>Loot table</h2>
-      <table>
-        <tr>
-          <th>Color selected and received</th>
-          <th>Theoretical Chance</th>
-          <th>Reward</th>
-        </tr>
-        <tr>
-          <td>black</td>
-          <td>{{ 50 }}%</td>
-          <td>original bet x 1.5</td>
-        </tr>
-        <tr>
-          <td>red</td>
-          <td>{{ 50 }}%</td>
-          <td>original bet x 1.5</td>
-        </tr>
-      </table>
-    </InfoSection>
   </main>
 </template>
-
-<style scoped>
-main {
-  text-align: center;
-}
-
-#lastReward {
-  margin-top: 1%;
-  color: aquamarine;
-}
-
-#options {
-  margin-top: 10%;
-  position: relative;
-  display: grid;
-  column-gap: 10%;
-  grid-template-columns: repeat(3, 1fr);
-}
-
-#autospinButton {
-  margin-right: 5%;
-}
-
-#colorSelect {
-  margin-top: 5%;
-}
-
-#betSelect {
-  display: flex;
-  margin-left: 5%;
-  width: 100%;
-  cursor: pointer;
-}
-
-table {
-  border-collapse: collapse;
-  width: 100%;
-}
-
-td,
-th {
-  border: 1px solid black;
-  text-align: left;
-  padding: 0.5rem;
-}
-
-tr:nth-child(even) {
-  background-color: azure;
-}
-</style>
