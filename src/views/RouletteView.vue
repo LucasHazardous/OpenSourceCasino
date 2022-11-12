@@ -1,144 +1,172 @@
 <script>
-import PlayButton from "../components/PlayButton.vue";
 import BetSelectButton from "../components/BetSelectButton.vue";
-import AutospinButton from "../components/AutospinButton.vue";
-import Roulette from "../components/Roulette.vue";
-import InfoSection from "../components/InfoSection.vue";
+import Roulette from "../components/RouletteComponent.vue";
+import ToastNotification from "@/components/ToastNotification.vue";
 
 export default {
-    props: ["points"],
-    data() {
-        return {
-            rouletteBets: [100000, 200000],
-            autospinning: false,
-            lastReward: 0,
-            spinning: false,
-            colors: ["red", "black"]
-        };
+  props: ["points"],
+  data() {
+    return {
+      rouletteBets: [100000, 200000],
+      autospinning: false,
+      lastReward: 0,
+      spinning: false,
+      colors: ["dark-blue", "light-blue"],
+      buttonSound: new Audio("spin.mp3"),
+      end: false,
+    };
+  },
+  components: {
+    BetSelectButton,
+    Roulette,
+    ToastNotification,
+  },
+  methods: {
+    playButtonSound() {
+      this.buttonSound.play();
     },
-    components: { PlayButton, BetSelectButton, AutospinButton, Roulette, InfoSection },
-    methods: {
-        spinRoulette() {
-            if (this.spinning) return;
+    spinRoulette() {
+      if (this.spinning) return;
 
-            const placedBet = this.$refs.betSelect.$data.value;
+      const placedBet = this.$refs.betSelect.$data.value;
 
-            if (this.$props.points - placedBet < 0) {
-                this.autospinning = false;
-                return;
-            }
+      if (this.$props.points - placedBet < 0) {
+        this.autospinning = false;
+        return;
+      }
 
-            this.spinning = true;
-            
-            this.$emit("changePoints", -placedBet);
+      this.spinning = true;
 
-            const chosenColor = this.$refs.colorSelect.$data.value;
+      this.$emit("changePoints", -placedBet);
 
-            this.$refs.roulette.spin().then(res => {
-                if (res == chosenColor) {
-                    this.$emit("changePoints", placedBet * 1.5);
-                    this.lastReward = placedBet * 1.5;
-                } else this.lastReward = 0;
-                this.spinning = false;
-            });
-        }
+      const chosenColor = this.$refs.colorSelect.$data.value;
+
+      this.$refs.roulette.spin().then((res) => {
+        this.end = true;
+        if (res === chosenColor) {
+          this.$emit("changePoints", placedBet * 1.5);
+          this.lastReward = placedBet * 1.5;
+        } else this.lastReward = 0;
+        this.spinning = false;
+        setTimeout(() => {
+          this.end = false;
+        }, 3000);
+      });
     },
-    watch: {
-        autospinning: function autospinWatch() {
-            if (!this.spinning && this.autospinning) this.spinRoulette();
-        },
-        spinning: function spinWatch() {
-            if (!this.spinning && this.autospinning) setTimeout(this.spinRoulette, 1000);
-        }
-    }
-}
+  },
+  watch: {
+    autospinning: function autospinWatch() {
+      if (!this.spinning && this.autospinning) this.spinRoulette();
+    },
+    spinning: function spinWatch() {
+      if (!this.spinning && this.autospinning)
+        setTimeout(this.spinRoulette, 1000);
+    },
+  },
+};
 </script>
 
 <template>
-    <main>
-        <p id="lastReward">Last reward: {{ lastReward }}</p>
-        <Roulette ref="roulette"></Roulette>
-        <div id="options">
-            <BetSelectButton :bets="rouletteBets" id="betSelect" ref="betSelect"></BetSelectButton>
-
-            <PlayButton
-                :style="spinning || autospinning ? 'pointer-events: none; opacity: 0.2' : 'pointer-events: auto'"
-                @click="spinRoulette">Spin</PlayButton>
-            <AutospinButton @click="autospinning = !autospinning" :autospinning="autospinning" id="autospinButton">
-                Autospin</AutospinButton>
-        </div>
+  <main
+    class="flex min-h-screen w-screen justify-center items-center transition-all"
+  >
+    <ToastNotification
+      :message="'You earned ' + lastReward + ' points!'"
+      class="transition-all"
+      :class="end ? 'translate-x-0' : 'translate-x-96'"
+    />
+    <div class="flex flex-col w-5/6 sm:w-2/3 items-center gap-5">
+      <div class="flex flex-col items-center">
+        <h2 class="text-[2em]">Roulette</h2>
+        <p id="lastReward" class="font-mono">Last reward: {{ lastReward }}</p>
+      </div>
+      <Roulette class="!m-0 p-5" ref="roulette"></Roulette>
+      <div
+        id="options"
+        class="flex flex-col items-center justify-center sm:flex-row gap-5 transition-all"
+      >
         <BetSelectButton
-            :style="spinning || autospinning ? 'pointer-events: none; opacity: 0.2' : 'pointer-events: auto'"
-            :bets="colors" id="colorSelect" ref="colorSelect"></BetSelectButton>
-        <InfoSection>
-            <h2>Loot table</h2>
-            <table>
-                <tr>
-                    <th>Color selected and received</th>
-                    <th>Theoretical Chance</th>
-                    <th>Reward</th>
-                </tr>
-                <tr>
-                    <td>black</td>
-                    <td>{{ 50 }}%</td>
-                    <td>original bet x 1.5</td>
-                </tr>
-                <tr>
-                    <td>red</td>
-                    <td>{{ 50 }}%</td>
-                    <td>original bet x 1.5</td>
-                </tr>
-            </table>
-        </InfoSection>
-    </main>
+          :bets="rouletteBets"
+          id="betSelect"
+          ref="betSelect"
+        ></BetSelectButton>
+
+        <div class="btn-group btn-group-horizontal">
+          <button
+            class="btn btn-primary transition-all"
+            @click="
+              spinRoulette();
+              playButtonSound();
+            "
+            ref="spinButton"
+          >
+            {{ spinning ? "Spinning..." : "Spin" }}
+          </button>
+          <button
+            class="btn"
+            @click="autospinning = !autospinning"
+            id="autospinButton"
+          >
+            {{ autospinning ? "Stop" : "Autospin" }}
+          </button>
+        </div>
+
+        <BetSelectButton
+          title="Choose color"
+          :bets="colors"
+          id="colorSelect"
+          ref="colorSelect"
+        ></BetSelectButton>
+      </div>
+      <div tabindex="0" class="collapse rounded-box">
+        <div class="collapse-title text-2xl font-medium text-center p-5">
+          Loot chances - click
+        </div>
+        <div class="collapse-content">
+          <div class="stats stats-vertical lg:stats-horizontal shadow">
+            <div class="stat">
+              <div class="stat-figure text-secondary">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  class="inline-block w-8 h-8 stroke-current stroke-primary"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+                  ></path>
+                </svg>
+              </div>
+              <div class="stat-title">Red</div>
+              <div class="stat-value">50%</div>
+              <div class="stat-desc">reward: original bet x 1.5</div>
+            </div>
+            <div class="stat">
+              <div class="stat-figure text-secondary">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  class="inline-block w-8 h-8 stroke-current stroke-primary"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+                  ></path>
+                </svg>
+              </div>
+              <div class="stat-title">Black</div>
+              <div class="stat-value">50%</div>
+              <div class="stat-desc">reward: original bet x 1.5</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
 </template>
-
-<style scoped>
-main {
-    text-align: center;
-}
-
-#lastReward {
-    margin-top: 1%;
-    color: aquamarine;
-}
-
-#options {
-    margin-top: 10%;
-    position: relative;
-    display: grid;
-    column-gap: 10%;
-    grid-template-columns: repeat(3, 1fr);
-}
-
-#autospinButton {
-    margin-right: 5%;
-}
-
-#colorSelect {
-    margin-top: 5%;
-}
-
-#betSelect {
-    display: flex;
-    margin-left: 5%;
-    width: 100%;
-    cursor: pointer;
-}
-
-table {
-    border-collapse: collapse;
-    width: 100%;
-}
-
-td,
-th {
-    border: 1px solid black;
-    text-align: left;
-    padding: 0.5rem;
-}
-
-tr:nth-child(even) {
-    background-color: azure;
-}
-</style>
