@@ -8,11 +8,11 @@ if (localStorage.getItem("points") === null)
 
 <script>
 import Game from "@/Game";
-// make a list of games
+
 const games = [
-  new Game("Slots", "/src/assets/slots.jpg", "Spin the wheel and win!"),
-  new Game("Roulette", "/src/assets/roulette.jpg", "Spin the wheel and win!"),
-  new Game("Blackjack", "/src/assets/blackjack.jpg", "Beat the dealer and win!"),
+  new Game("Slots", "/OpenSourceCasino/slots.jpg", "Spin the wheel and win!"),
+  new Game("Roulette", "/OpenSourceCasino/roulette.jpg", "Spin the wheel and win!"),
+  new Game("Blackjack", "/OpenSourceCasino/blackjack.jpg", "Beat the dealer and win!"),
 ];
 export default {
   data() {
