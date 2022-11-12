@@ -37,10 +37,10 @@ export default {
 
       const maxDelay = Math.floor(Math.random() * 101) + 200;
 
-      return new Promise((resolve, reject) => {
+      return new Promise((resolve) => {
         function spinRec(moveDelay) {
           if (moveDelay >= maxDelay) {
-            return resolve(i % 2 == 0 ? "dark-blue" : "light-blue");
+            return resolve(i % 2 === 0 ? "dark-blue" : "light-blue");
           }
           drawWheelWithBall(size, r, centerX, centerY, i++);
           setTimeout(
@@ -93,7 +93,7 @@ export default {
         radianSum += current;
         this.canvasCtx.lineTo(centerX, centerY);
 
-        if (i % 2 == 0) this.canvasCtx.fillStyle = "#6184D8";
+        if (i % 2 === 0) this.canvasCtx.fillStyle = "#6184D8";
         else this.canvasCtx.fillStyle = "#19297C";
 
         this.canvasCtx.fill();

@@ -28,6 +28,6 @@ export default {
     @change="changeValue"
     ref="betValue"
   >
-    <option v-for="bet in bets" :value="bet">{{ bet }}</option>
+    <option :key="bet" v-for="bet in bets" :value="bet">{{ bet }}</option>
   </select>
 </template>

@@ -1,8 +1,7 @@
 <script>
-import PlayButton from "../components/PlayButton.vue";
 import BetSelectButton from "../components/BetSelectButton.vue";
 import BlackjackCardTable from "../components/BlackjackCardTable.vue";
-import InfoSection from "../components/InfoSection.vue";
+import ToastNotification from "@/components/ToastNotification.vue";
 
 export default {
   props: ["points"],
@@ -75,9 +74,15 @@ export default {
       enableButtons: false,
       dealerHandValue: -1,
       continueButtonEnabled: false,
+      action: false,
+      shuffle: false,
     };
   },
-  components: { PlayButton, BetSelectButton, BlackjackCardTable, InfoSection },
+  components: {
+    ToastNotification,
+    BetSelectButton,
+    BlackjackCardTable,
+  },
   methods: {
     startGame() {
       this.selectedBet = Number(this.$refs.betSelect.$data.value);
@@ -114,11 +119,15 @@ export default {
       else if (dealerHandValue > this.playerHandValue)
         lastReward -= this.selectedBet;
 
+      this.action = true;
       this.$emit("changePoints", lastReward);
       this.lastReward = lastReward;
 
       this.enableButtons = false;
       this.continueButtonEnabled = true;
+      setTimeout(() => {
+        if (!this.shuffle) this.action = false;
+      }, 1000);
     },
     startNewRound() {
       if (this.points - this.selectedBet < 0) return;
@@ -140,7 +149,7 @@ export default {
       for (let i = 0; i < arr.length; i++) {
         const cardValue = arr[i].slice(2, 4);
 
-        if (cardValue == "A") aceCount++;
+        if (cardValue === "A") aceCount++;
         else if (!isNaN(cardValue)) value += Number(cardValue);
         else value += 10;
       }
@@ -166,8 +175,7 @@ export default {
       this.playerHandValue = 0;
     },
     fetchCard() {
-      if (this.deckCards.length == 0) {
-        alert("Shuffling discarded cards back to the deck.");
+      if (this.deckCards.length === 0) {
         this.shuffleDiscardToDeck();
       }
 
@@ -182,13 +190,18 @@ export default {
     shuffleDiscardToDeck() {
       this.deckCards = this.discardedCards;
       this.discardedCards = [];
-
+      this.shuffle = true;
+      this.action = true;
       for (let i = this.deckCards.length - 1; i > 0; i--) {
         const r = Math.floor(Math.random() * (i + 1));
         const tmp = this.deckCards[i];
         this.deckCards[i] = this.deckCards[r];
         this.deckCards[r] = tmp;
       }
+      setTimeout(() => {
+        this.shuffle = false;
+        this.action = false;
+      }, 3000);
     },
   },
 };
@@ -198,6 +211,12 @@ export default {
   <main
     class="flex flex-col min-h-screen sm:h-screen w-screen justify-center items-center transition-all"
   >
+    <ToastNotification
+      :shuffle="shuffle"
+      :message="'You earned ' + lastReward + ' points!'"
+      class="transition-all"
+      :class="action ? 'translate-x-0' : 'translate-x-96'"
+    />
     <div
       class="flex flex-col sm:flex-row gap-5 w-full sm:w-2/3 h-auto sm:h-1/2 justify-center transition-transform"
     >
@@ -241,7 +260,7 @@ export default {
       </div>
       <div
         id="game"
-        class="flex flex-col items-center w-full sm:w-1/2 gap-3"
+        class="flex flex-col items-center w-full px-5 sm:w-5/12 gap-3"
         v-if="playing"
       >
         <h1>{{ dealerHandValue < 0 ? "?" : dealerHandValue }}</h1>

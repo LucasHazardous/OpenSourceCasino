@@ -4,11 +4,11 @@
 
 **I strongly recommend that you never play in a casino with real money!**
 
-To start playing any gamemode simply navigate to the [website](https://lucashazardous.github.io/OpenSourceCasino), choose game and have fun!
+To start playing any game mode simply navigate to the [website](https://lucashazardous.github.io/OpenSourceCasino), choose game and have fun!
 
 ### This doesn't make any sense
 
-Why would you want to play if you know that the rewards are fake? I'm aware of that, this casino will never give the excitement caused by chasing meaningful rewards. That is not the goal though and will never be. The only excitement that you can get here is the one caused by satysfiying, easy and intuitive gameplay. It also gives you an insight why you **should never think of a casino as a way to make money**.
+Why would you want to play if you know that the rewards are fake? I'm aware of that, this casino will never give the excitement caused by chasing meaningful rewards. That is not the goal though and will never be. The only excitement that you can get here is the one caused by satisfying, easy and intuitive gameplay. It also gives you an insight why you **should never think of a casino as a way to make money**.
 
 ### My donuts are gone, what now?
 

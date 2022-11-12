@@ -1,6 +1,7 @@
 <script>
 import BetSelectButton from "../components/BetSelectButton.vue";
-import Roulette from "../components/Roulette.vue";
+import Roulette from "../components/RouletteComponent.vue";
+import ToastNotification from "@/components/ToastNotification.vue";
 
 export default {
   props: ["points"],
@@ -12,11 +13,13 @@ export default {
       spinning: false,
       colors: ["dark-blue", "light-blue"],
       buttonSound: new Audio("spin.mp3"),
+      end: false,
     };
   },
   components: {
     BetSelectButton,
     Roulette,
+    ToastNotification,
   },
   methods: {
     playButtonSound() {
@@ -39,11 +42,15 @@ export default {
       const chosenColor = this.$refs.colorSelect.$data.value;
 
       this.$refs.roulette.spin().then((res) => {
-        if (res == chosenColor) {
+        this.end = true;
+        if (res === chosenColor) {
           this.$emit("changePoints", placedBet * 1.5);
           this.lastReward = placedBet * 1.5;
         } else this.lastReward = 0;
         this.spinning = false;
+        setTimeout(() => {
+          this.end = false;
+        }, 3000);
       });
     },
   },
@@ -63,13 +70,21 @@ export default {
   <main
     class="flex min-h-screen w-screen justify-center items-center transition-all"
   >
-    <div class="flex flex-col w-2/3 items-center gap-5">
+    <ToastNotification
+      :message="'You earned ' + lastReward + ' points!'"
+      class="transition-all"
+      :class="end ? 'translate-x-0' : 'translate-x-96'"
+    />
+    <div class="flex flex-col w-5/6 sm:w-2/3 items-center gap-5">
       <div class="flex flex-col items-center">
         <h2 class="text-[2em]">Roulette</h2>
         <p id="lastReward" class="font-mono">Last reward: {{ lastReward }}</p>
       </div>
       <Roulette class="!m-0 p-5" ref="roulette"></Roulette>
-      <div id="options" class="flex flex-col sm:flex-row gap-5 transition-all">
+      <div
+        id="options"
+        class="flex flex-col items-center justify-center sm:flex-row gap-5 transition-all"
+      >
         <BetSelectButton
           :bets="rouletteBets"
           id="betSelect"
@@ -105,7 +120,7 @@ export default {
           Loot chances - click
         </div>
         <div class="collapse-content">
-          <div class="stats shadow">
+          <div class="stats stats-vertical lg:stats-horizontal shadow">
             <div class="stat">
               <div class="stat-figure text-secondary">
                 <svg

@@ -1,6 +1,7 @@
 <script>
-import Slot from "../components/Slot.vue";
+import SlotComponent from "../components/SlotComponent.vue";
 import BetSelectButton from "../components/BetSelectButton.vue";
+import ToastNotification from "@/components/ToastNotification.vue";
 
 export default {
   props: ["points"],
@@ -15,10 +16,12 @@ export default {
       lastReward: 0,
       autospinning: false,
       buttonSound: new Audio("spin.mp3"),
+      end: false,
     };
   },
   components: {
-    Slot,
+    ToastNotification,
+    SlotComponent,
     BetSelectButton,
   },
   methods: {
@@ -26,7 +29,7 @@ export default {
       this.buttonSound.play();
     },
     spinSlots(slotCounter, rewards = []) {
-      if (slotCounter == 1) {
+      if (slotCounter === 1) {
         if (this.spinning) return;
 
         this.lastPlacedBet = Number(this.$refs.betSelect.$data.value);
@@ -62,8 +65,12 @@ export default {
         finalReward = this.lastPlacedBet * 7;
       else if (rewardsMap.get("=") >= 2) finalReward = this.lastPlacedBet * 2;
 
+      this.end = true;
       this.lastReward = finalReward;
       this.$emit("changePoints", finalReward);
+      setTimeout(() => {
+        this.end = false;
+      }, 3000);
     },
   },
   watch: {
@@ -82,20 +89,29 @@ export default {
   <main
     class="flex min-h-screen w-screen justify-center items-center transition-all"
   >
-    <div class="flex flex-col w-2/3 items-center gap-5">
+    <ToastNotification
+      :message="'You earned ' + lastReward + ' points!'"
+      class="transition-all"
+      :class="end ? 'translate-x-0' : 'translate-x-96'"
+    />
+    <div class="flex flex-col w-5/6 sm:w-2/3 items-center gap-5">
       <div class="flex flex-col items-center">
         <h2 class="text-[2em]">Slots</h2>
         <p id="lastReward" class="font-mono">Last reward: {{ lastReward }}</p>
       </div>
       <div id="slotSpace" class="pt-3 flex justify-center gap-5 w-full">
-        <Slot
+        <SlotComponent
+          :key="i"
           v-for="i in slotAmount"
           :slotValues="slotValues"
           :ref="String('slot' + i)"
           class="slot"
         />
       </div>
-      <div id="options" class="flex gap-3 trans">
+      <div
+        id="options"
+        class="flex flex-col sm:flex-row flex-wrap justify-center gap-3 trans"
+      >
         <BetSelectButton
           :bets="slotBets"
           id="betSelect"
@@ -127,7 +143,7 @@ export default {
           Loot chances - click
         </div>
         <div class="collapse-content">
-          <div class="stats shadow">
+          <div class="stats stats-vertical lg:stats-horizontal shadow">
             <div class="stat">
               <div class="stat-figure text-secondary">
                 <svg

@@ -5,7 +5,6 @@
 * {
   padding: 0;
   margin: 0;
-  /* font-family: "Comfortaa", cursive; */
   font-family: 'Montserrat', sans-serif;
   -webkit-touch-callout: none;
   -webkit-user-select: none;
@@ -15,7 +14,6 @@
   user-select: none;
 }
 
-/* temporary mesh gradient until I make a better one */
 html,
 body {
   background-color: rgb(88, 28, 135);

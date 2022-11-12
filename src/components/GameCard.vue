@@ -1,6 +1,6 @@
 <template>
-  <div class="card sm:max-w-[25vw] bg-base-100 shadow-xl">
-    <figure class="h-52 overflow-hidden">
+  <div class="card bg-base-100 shadow-xl">
+    <figure class="h-52 overflow-hidden !hidden sm:!flex">
       <img class="object-cover" :src="game.image" alt="Shoes" />
     </figure>
     <div class="card-body">
@@ -8,7 +8,7 @@
       <p>{{ game.description }}</p>
       <div class="card-actions justify-end">
         <button class="btn btn-primary" @click="$router.push(game.name)">
-          Zagraj
+          Play
         </button>
       </div>
     </div>

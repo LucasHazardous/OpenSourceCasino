@@ -8,7 +8,7 @@ export default {
       slotValueElement.classList.add("spinning");
       slotValueElement.classList.remove("spun");
 
-      return new Promise((resolve, reject) => {
+      return new Promise((resolve) => {
         function spinRec() {
           if (spinCount <= 0) {
             slotValueElement.classList.add("spun");

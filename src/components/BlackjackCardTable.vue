@@ -8,13 +8,14 @@ export default {
   <div class="flex justify-center gap-5 w-full h-2/3">
     <div
       v-for="card in dealerHide ? cards.slice(0, 1) : cards"
+      :key="card.id"
       class="cardContainer"
     >
       <div class="">{{ card.slice(2, 4) }}</div>
       <div
         class="text-center text-3xl"
         :style="
-          card[0] == '♦' || card[0] == '♥' ? 'color: red;' : 'color: black;'
+          card[0] === '♦' || card[0] === '♥' ? 'color: red;' : 'color: black;'
         "
       >
         {{ card[0] }}
