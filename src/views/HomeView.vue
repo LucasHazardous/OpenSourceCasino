@@ -1,62 +1,58 @@
-<script setup>
-defineProps({
-  games: {
-    type: Array,
-    required: true
-  }
-})
-</script>
-
 <template>
-  <main>
-    <a class="game" v-for="game in games" :href="'/OpenSourceCasino/#/'+game">
-      <div>{{ game }}</div>
-    </a>
+  <main
+    class="flex flex-col gap-14 w-screen min-h-screen items-center justify-center"
+  >
+    <div class="hero w-5/6 sm:w-1/2 rounded-3xl bg-neutral">
+      <div class="hero-content !w-full text-center text-neutral-content">
+        <div class="m-2">
+          <h1 class="mb-5 text-5xl font-bold">
+            Welcome to <span class="text-primary">OSC!</span>
+          </h1>
+          <p>
+            This "casino" is made for fun only! It is just a game and no real
+            money is involved. What is the purpose of this? To enjoy games from
+            a casino while playing for fake points. Goal of this project is to
+            make these games as satisfying as possible and let people have fun
+            without losing money.
+          </p>
+          <p class="mt-3">
+            Creator:
+            <a class="text-accent" href="https://github.com/LucasHazardous"
+              >LucasHazardous</a
+            >
+          </p>
+          <p>
+            Design:
+            <a class="text-accent" href="https://github.com/matt-pasek"
+              >matt-pasek</a
+            >
+          </p>
+        </div>
+      </div>
+    </div>
+    <div class="w-3/4 flex flex-col sm:flex-row gap-10">
+      <GameCard v-for="game in games" :key="game.name" :game="game" />
+    </div>
   </main>
 </template>
 
+<script>
+import { defineComponent } from "vue";
+import GameCard from "@/components/GameCard.vue";
 
-<style scoped>
-main {
-  display: grid;
-  column-gap: 2%;
-  row-gap: 20%;
-  grid-template-columns: repeat(3, 1fr);
-  padding: 10%;
-  font-size: 80%;
-}
+export default defineComponent({
+  name: "HomeView",
+  title: "Home",
+  components: {
+    GameCard,
+  },
+  props: {
+    games: {
+      type: Array,
+      required: true,
+    },
+  },
+});
+</script>
 
-.game {
-  padding: 5%;
-  background-color: #121212;
-  border-radius: 5%;
-
-  animation: 5s rotate linear infinite;
-
-  min-height: 1rem;
-  max-height: 10%;
-}
-
-.game:hover {
-  border: 0.5rem solid;
-  border-image: conic-gradient(from var(--angle), red, yellow, lime, aqua, blue, magenta, red) 1;
-}
-
-@keyframes rotate {
-	to {
-		--angle: 360deg;
-	}
-}
-
-@property --angle {
-  syntax: '<angle>';
-  initial-value: 0deg;
-  inherits: false;
-}
-
-a {
-  text-decoration: none;
-  color: aquamarine;
-  background-color: #121212;
-}
-</style>
+<style scoped></style>

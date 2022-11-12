@@ -2,72 +2,39 @@
 defineProps({
   points: {
     type: Number,
-    required: true
-  }
-})
+    required: true,
+  },
+});
 </script>
 
 <template>
-  <main>
-    <div id="menu">
-      <a href="/OpenSourceCasino">Open Source Casino</a>
-      <a href="/OpenSourceCasino/#/about">About</a>
+  <nav
+    class="fixed sm:px-20 py-5 bg-neutral bg-opacity-50 backdrop-blur-xl sm:bg-opacity-0 sm:backdrop-blur-0 w-screen flex flex-col sm:flex-row items-center justify-between z-40"
+  >
+    <div id="menu" class="flex items-center justify-between sm:w-1/4">
+      <a class="font-semibold text-2xl" href="/OpenSourceCasino/"
+        >Open Source Casino</a
+      >
     </div>
-
-    <div id="pointCounter">
-      <p id="pointCounterContent">🍩 {{ points.toLocaleString("fi-FI") }}</p>
+    <div
+      id="pointCounter"
+      class="flex items-center justify-center gap-2 w-1/12"
+    >
+      <img
+        src="/src/assets/icons/point.svg"
+        alt="point"
+        class="w-10 white-icon"
+      />
+      <p id="pointCounterContent" class="text-xl">
+        {{ points.toLocaleString("fi-FI") }}
+      </p>
     </div>
-  </main>
+  </nav>
 </template>
 
 <style scoped>
-* {
-  width: 100%;
-  background-color: #121212;
-  color: azure;
-  padding: 0%;
-  overflow: hidden;
-}
-
-main {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-a {
-  text-decoration: none;
-  color: aquamarine;
-  margin-left: 10%;
-}
-
-div {
-  padding: 1%;
-  height: 100%;
-}
-
-#menu {
-  width: 48%;
-  display: inline-block;
-  font-size: 150%;
-}
-
-#pointCounter {
-  display: inline-block;
-  width: 48%;
-  text-align: right;
-  font-size: 150%;
-}
-
-@media screen and (min-width: 901px) {
-  #menu {
-    font-size: 150%;
-  }
-}
-
-@media screen and (max-width: 900px) {
-  #menu {
-    font-size: 80%;
-  }
+.white-icon {
+  filter: brightness(0) saturate(100%) invert(100%) sepia(100%) saturate(17%)
+    hue-rotate(241deg) brightness(105%) contrast(100%);
 }
 </style>
