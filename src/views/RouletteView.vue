@@ -94,7 +94,10 @@ export default {
         <div class="btn-group btn-group-horizontal">
           <button
             class="btn btn-primary transition-all"
-            @click="spinRoulette"
+            @click="
+              spinRoulette();
+              playButtonSound();
+            "
             ref="spinButton"
           >
             {{ spinning ? "Spinning..." : "Spin" }}
