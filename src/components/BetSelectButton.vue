@@ -24,7 +24,7 @@ export default {
 
 <template>
   <select
-    class="select select-accent max-w-xs"
+    class="select select-accent max-w-xs !outline-none"
     @change="changeValue"
     ref="betValue"
   >

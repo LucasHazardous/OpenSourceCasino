@@ -231,6 +231,7 @@ export default {
             :bets="blackjackBets"
             id="betSelect"
             ref="betSelect"
+            :disabled="playing"
           />
           <button
             class="btn btn-primary transition-all"
