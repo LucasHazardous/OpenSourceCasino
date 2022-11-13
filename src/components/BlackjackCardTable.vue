@@ -5,7 +5,7 @@ export default {
 </script>
 
 <template>
-  <div class="flex justify-center gap-5 w-full h-2/3">
+  <div class="flex justify-center gap-5 w-full h-2/3 flex-wrap">
     <div
       v-for="card in dealerHide ? cards.slice(0, 1) : cards"
       :key="card.id"

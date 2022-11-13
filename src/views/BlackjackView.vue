@@ -269,6 +269,7 @@ export default {
           :dealerHide="dealerHide"
           :cards="dealerCards"
         ></BlackjackCardTable>
+        <div class="divider"></div>
         <BlackjackCardTable
           :dealerHide="false"
           :cards="playerCards"
