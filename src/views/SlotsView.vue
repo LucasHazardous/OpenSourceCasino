@@ -140,7 +140,7 @@ export default {
       </div>
       <div tabindex="0" class="collapse rounded-box">
         <div class="collapse-title text-2xl font-medium text-center p-5">
-          Loot chances - click
+          Loot chances
         </div>
         <div class="collapse-content">
           <div class="stats stats-vertical lg:stats-horizontal shadow">
@@ -169,7 +169,7 @@ export default {
                   ).toFixed(2)
                 }}%
               </div>
-              <div class="stat-desc">reward: original bet x 5</div>
+              <div class="stat-desc">Reward: Original bet x 5</div>
             </div>
             <div class="stat">
               <div class="stat-figure text-secondary">
@@ -196,7 +196,7 @@ export default {
                   ).toFixed(2)
                 }}%
               </div>
-              <div class="stat-desc">reward: original bet x 7</div>
+              <div class="stat-desc">Reward: Original bet x 7</div>
             </div>
             <div class="stat">
               <div class="stat-figure text-secondary">
@@ -214,7 +214,7 @@ export default {
                   ></path>
                 </svg>
               </div>
-              <div class="stat-title">at least two ==</div>
+              <div class="stat-title">==</div>
               <div class="stat-value">
                 {{
                   (
@@ -230,7 +230,7 @@ export default {
                   ).toFixed(2)
                 }}%
               </div>
-              <div class="stat-desc">reward: original bet x 2</div>
+              <div class="stat-desc">Reward: Original bet x 2</div>
             </div>
           </div>
         </div>

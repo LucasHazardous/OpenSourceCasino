@@ -120,7 +120,7 @@ export default {
       </div>
       <div tabindex="0" class="collapse rounded-box">
         <div class="collapse-title text-2xl font-medium text-center p-5">
-          Loot chances - click
+          Loot chances
         </div>
         <div class="collapse-content">
           <div class="stats stats-vertical lg:stats-horizontal shadow">
@@ -140,9 +140,9 @@ export default {
                   ></path>
                 </svg>
               </div>
-              <div class="stat-title">Red</div>
+              <div class="stat-title">Light-blue</div>
               <div class="stat-value">50%</div>
-              <div class="stat-desc">reward: original bet x 1.5</div>
+              <div class="stat-desc">Reward: Original bet x 1.5</div>
             </div>
             <div class="stat">
               <div class="stat-figure text-secondary">
@@ -160,9 +160,9 @@ export default {
                   ></path>
                 </svg>
               </div>
-              <div class="stat-title">Black</div>
+              <div class="stat-title">Dark-blue</div>
               <div class="stat-value">50%</div>
-              <div class="stat-desc">reward: original bet x 1.5</div>
+              <div class="stat-desc">Reward: Original bet x 1.5</div>
             </div>
           </div>
         </div>

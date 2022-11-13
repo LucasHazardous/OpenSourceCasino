@@ -10,7 +10,7 @@ if (localStorage.getItem("points") === null)
 import Game from "@/Game";
 
 const games = [
-  new Game("Slots", "/OpenSourceCasino/slots.jpg", "Spin the wheel and win!"),
+  new Game("Slots", "/OpenSourceCasino/slots.jpg", "Spin the slots and win!"),
   new Game("Roulette", "/OpenSourceCasino/roulette.jpg", "Spin the wheel and win!"),
   new Game("Blackjack", "/OpenSourceCasino/blackjack.jpg", "Beat the dealer and win!"),
 ];

@@ -292,19 +292,19 @@ export default {
             <tbody>
               <tr>
                 <td>Round start</td>
-                <td>-original bet</td>
+                <td>-Original bet</td>
               </tr>
               <tr>
                 <td>Tie</td>
-                <td>original bet</td>
+                <td>+Original bet</td>
               </tr>
               <tr>
                 <td>Failure</td>
-                <td>0</td>
+                <td>Nothing</td>
               </tr>
               <tr>
                 <td>Victory</td>
-                <td>original bet x2</td>
+                <td>+Original bet x 2</td>
               </tr>
             </tbody>
           </table>
