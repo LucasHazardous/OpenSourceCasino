@@ -8,7 +8,7 @@ export default {
   data() {
     return {
       playing: false,
-      selectedBet: 0,
+      selectedBet: 25000,
       lastReward: 0,
       blackjackBets: [25000, 50000],
       deckCards: [
@@ -85,6 +85,8 @@ export default {
   },
   methods: {
     startGame() {
+      if (this.points - this.selectedBet < 0) return;
+
       this.selectedBet = Number(this.$refs.betSelect.$data.value);
       this.enableButtons = true;
       if (this.points - this.selectedBet < 0) return;
