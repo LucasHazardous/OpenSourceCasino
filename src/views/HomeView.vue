@@ -1,6 +1,13 @@
 <template>
   <main
-    class="flex flex-col gap-14 w-screen min-h-screen items-center justify-center"
+    class="
+      flex flex-col
+      gap-14
+      w-screen
+      min-h-screen
+      items-center
+      justify-center
+    "
   >
     <div class="hero w-5/6 sm:w-1/2 rounded-3xl bg-neutral">
       <div class="hero-content !w-full text-center text-neutral-content">
@@ -30,7 +37,17 @@
         </div>
       </div>
     </div>
-    <div class="w-3/4 flex flex-col sm:flex-row gap-10">
+    <div
+      class="
+        w-full
+        flex flex-wrap
+        items-center
+        sm:justify-center
+        flex-col
+        sm:flex-row
+        gap-10
+      "
+    >
       <GameCard v-for="game in games" :key="game.name" :game="game" />
     </div>
   </main>
@@ -55,4 +72,5 @@ export default defineComponent({
 });
 </script>
 
-<style scoped></style>
+<style scoped>
+</style>
