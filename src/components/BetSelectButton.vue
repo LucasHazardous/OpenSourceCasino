@@ -1,14 +1,6 @@
-<script setup>
-defineProps({
-  bets: {
-    type: Array,
-    required: true,
-  },
-});
-</script>
-
 <script>
 export default {
+  props: ["bets"],
   data() {
     return {
       value: this.$props.bets[0],
