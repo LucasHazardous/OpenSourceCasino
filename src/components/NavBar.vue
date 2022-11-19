@@ -1,10 +1,7 @@
-<script setup>
-defineProps({
-  points: {
-    type: Number,
-    required: true,
-  },
-});
+<script>
+export default {
+  props: ["points"],
+};
 </script>
 
 <template>

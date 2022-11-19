@@ -39,5 +39,3 @@ export default {
     :points="points"
   />
 </template>
-
-<style scoped></style>

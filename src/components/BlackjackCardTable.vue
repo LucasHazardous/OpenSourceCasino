@@ -32,6 +32,6 @@ export default {
 
 <style scoped>
 .cardContainer {
-  @apply flex flex-col justify-between bg-neutral text-primary p-5 rounded-xl font-black text-xl w-1/4;
+  @apply flex flex-col justify-between bg-neutral text-primary p-5 rounded-xl font-black text-xl w-1/4 min-w-[80px];
 }
 </style>
