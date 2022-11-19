@@ -220,9 +220,9 @@ export default {
       :class="action ? 'translate-x-0' : 'translate-x-96'"
     />
     <div
-      class="flex flex-col sm:flex-row gap-5 w-full sm:w-2/3 h-auto sm:h-1/2 justify-center transition-transform"
+      class="flex flex-col sm:flex-row gap-5 w-full sm:w-2/3 h-auto justify-center transition-transform"
     >
-      <div class="flex flex-col sm:w-1/3 justify-center items-center gap-5">
+      <div class="flex flex-row flex-wrap sm:flex-col sm:w-1/3 justify-center items-center gap-5">
         <div class="flex flex-col items-center">
           <h2 class="text-[2em]">Blackjack</h2>
           <p id="lastReward" class="font-mono">Last reward: {{ lastReward }}</p>
