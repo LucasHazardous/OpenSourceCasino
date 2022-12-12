@@ -6,7 +6,6 @@
     "build": "vite build",
     "preview": "vite preview --port 4173",
     "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs --fix --ignore-path .gitignore",
-    "deploy": "node scripts/deploy-gp.js",
     "prepare": "husky install"
   },
   "dependencies": {
