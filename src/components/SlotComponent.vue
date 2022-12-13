@@ -4,7 +4,9 @@ export default {
   methods: {
     spin(spinCount) {
       const slotValueElement = this.$refs.slotValue;
-      const slotValues = this.$props.slotValues;
+      const availableToShow = [...this.$props.slotValues];
+      let previous = null;
+
       slotValueElement.classList.add("spinning");
       slotValueElement.classList.remove("spun");
 
@@ -15,8 +17,15 @@ export default {
             slotValueElement.classList.remove("spinning");
             return resolve(slotValueElement.innerText);
           }
-          slotValueElement.innerText =
-            slotValues[Math.floor(Math.random() * slotValues.length)];
+
+          const chosenIndex = Math.floor(
+            Math.random() * availableToShow.length
+          );
+          if (previous !== null) availableToShow.push(previous);
+          slotValueElement.innerText = availableToShow[chosenIndex];
+          previous = availableToShow[chosenIndex];
+          availableToShow.splice(chosenIndex, 1);
+
           setTimeout(spinRec, 200, --spinCount);
         }
         spinRec();
