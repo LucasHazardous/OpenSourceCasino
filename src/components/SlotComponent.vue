@@ -26,7 +26,7 @@ export default {
           previous = availableToShow[chosenIndex];
           availableToShow.splice(chosenIndex, 1);
 
-          setTimeout(spinRec, 200, --spinCount);
+          setTimeout(spinRec, 100, --spinCount);
         }
         spinRec();
       });
@@ -48,6 +48,18 @@ export default {
 <style scoped>
 .spinning {
   @apply bg-accent transition-all;
+  animation: valueTravel;
+  animation-duration: 100ms;
+  animation-iteration-count: infinite;
+}
+
+@keyframes valueTravel {
+  from {
+    padding-top: 0rem;
+  }
+  to {
+    padding-bottom: 0rem;
+  }
 }
 
 .spun {
