@@ -87,6 +87,7 @@ export default {
       >
         <BetSelectButton
           :bets="rouletteBets"
+          :disabled="spinning || autospinning"
           id="betSelect"
           ref="betSelect"
         ></BetSelectButton>
@@ -114,6 +115,7 @@ export default {
         <BetSelectButton
           title="Choose color"
           :bets="colors"
+          :disabled="spinning || autospinning"
           id="colorSelect"
           ref="colorSelect"
         ></BetSelectButton>
