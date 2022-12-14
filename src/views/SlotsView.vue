@@ -114,6 +114,7 @@ export default {
       >
         <BetSelectButton
           :bets="slotBets"
+          :disabled="spinning || autospinning"
           id="betSelect"
           ref="betSelect"
         ></BetSelectButton>
