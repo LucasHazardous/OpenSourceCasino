@@ -100,8 +100,9 @@ export default {
               playButtonSound();
             "
             ref="spinButton"
+            :disabled="spinning || autospinning"
           >
-            {{ spinning ? "Spinning..." : "Spin" }}
+            {{ spinning || autospinning ? "Spinning..." : "Spin" }}
           </button>
           <button
             class="btn"
