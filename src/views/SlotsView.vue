@@ -28,7 +28,6 @@ export default {
     spinSlots(slotCounter, rewards = []) {
       if (slotCounter === 1) {
         if (this.spinning) return;
-        this.buttonSound.play();
 
         this.lastPlacedBet = Number(this.$refs.betSelect.$data.value);
         if (this.$props.points - this.lastPlacedBet < 0) {
@@ -36,6 +35,7 @@ export default {
           return;
         }
         this.$emit("changePoints", -this.lastPlacedBet);
+        this.buttonSound.play();
       } else if (slotCounter > this.slotAmount) {
         this.spinning = false;
         this.calculateReward(rewards);

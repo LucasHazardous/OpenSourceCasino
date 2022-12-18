@@ -24,7 +24,6 @@ export default {
   methods: {
     spinRoulette() {
       if (this.spinning) return;
-      this.buttonSound.play();
 
       const placedBet = this.$refs.betSelect.$data.value;
 
@@ -36,6 +35,7 @@ export default {
       this.spinning = true;
 
       this.$emit("changePoints", -placedBet);
+      this.buttonSound.play();
 
       const chosenColor = this.$refs.colorSelect.$data.value;
 
