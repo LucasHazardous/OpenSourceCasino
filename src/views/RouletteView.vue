@@ -22,11 +22,9 @@ export default {
     ToastNotification,
   },
   methods: {
-    playButtonSound() {
-      this.buttonSound.play();
-    },
     spinRoulette() {
       if (this.spinning) return;
+      this.buttonSound.play();
 
       const placedBet = this.$refs.betSelect.$data.value;
 
@@ -95,10 +93,7 @@ export default {
         <div class="btn-group btn-group-horizontal">
           <button
             class="btn btn-primary transition-all"
-            @click="
-              spinRoulette();
-              playButtonSound();
-            "
+            @click="spinRoulette()"
             ref="spinButton"
             :disabled="spinning || autospinning"
           >
