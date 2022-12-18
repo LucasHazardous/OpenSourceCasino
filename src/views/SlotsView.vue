@@ -25,12 +25,10 @@ export default {
     BetSelectButton,
   },
   methods: {
-    playButtonSound() {
-      this.buttonSound.play();
-    },
     spinSlots(slotCounter, rewards = []) {
       if (slotCounter === 1) {
         if (this.spinning) return;
+        this.buttonSound.play();
 
         this.lastPlacedBet = Number(this.$refs.betSelect.$data.value);
         if (this.$props.points - this.lastPlacedBet < 0) {
@@ -122,10 +120,7 @@ export default {
         <div class="btn-group btn-group-horizontal">
           <button
             class="btn btn-primary transition-all w-1/2"
-            @click="
-              spinSlots(1);
-              playButtonSound();
-            "
+            @click="spinSlots(1)"
             ref="spinButton"
             :disabled="spinning || autospinning"
           >
