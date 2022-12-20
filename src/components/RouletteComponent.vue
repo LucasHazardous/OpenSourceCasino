@@ -106,9 +106,3 @@ export default {
 <template>
   <canvas ref="roulette"></canvas>
 </template>
-
-<style scoped>
-canvas {
-  margin-top: 5%;
-}
-</style>
