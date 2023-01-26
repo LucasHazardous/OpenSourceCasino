@@ -47,7 +47,7 @@ export default {
 
 <style scoped>
 .spinning {
-  @apply bg-accent transition-all;
+  @apply bg-accent transition-all p-0;
   animation: valueTravel;
   animation-duration: 100ms;
   animation-iteration-count: infinite;
@@ -58,7 +58,7 @@ export default {
     padding-top: 0rem;
   }
   to {
-    padding-bottom: 0rem;
+    padding-top: 2rem;
   }
 }
 
