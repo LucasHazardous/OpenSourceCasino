@@ -147,7 +147,7 @@ export default {
                   xmlns="http://www.w3.org/2000/svg"
                   fill="none"
                   viewBox="0 0 24 24"
-                  class="inline-block w-8 h-8 stroke-current stroke-primary"
+                  class="inline-block w-8 h-8 stroke-primary"
                 >
                   <path
                     stroke-linecap="round"
@@ -174,7 +174,7 @@ export default {
                   xmlns="http://www.w3.org/2000/svg"
                   fill="none"
                   viewBox="0 0 24 24"
-                  class="inline-block w-8 h-8 stroke-current stroke-primary"
+                  class="inline-block w-8 h-8 stroke-primary"
                 >
                   <path
                     stroke-linecap="round"
@@ -201,7 +201,7 @@ export default {
                   xmlns="http://www.w3.org/2000/svg"
                   fill="none"
                   viewBox="0 0 24 24"
-                  class="inline-block w-8 h-8 stroke-current stroke-primary"
+                  class="inline-block w-8 h-8 stroke-primary"
                 >
                   <path
                     stroke-linecap="round"
