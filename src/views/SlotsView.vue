@@ -2,7 +2,7 @@
 import SlotComponent from "../components/SlotComponent.vue";
 import BetSelectButton from "../components/BetSelectButton.vue";
 import InfoComponent from "../components/InfoComponent.vue";
-import ToastNotification from "@/components/ToastNotification.vue";
+import ToastNotification from "../components/ToastNotification.vue";
 
 export default {
   props: ["points"],

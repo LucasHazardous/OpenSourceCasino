@@ -1,7 +1,7 @@
 <script>
 import BetSelectButton from "../components/BetSelectButton.vue";
 import Roulette from "../components/RouletteComponent.vue";
-import ToastNotification from "@/components/ToastNotification.vue";
+import ToastNotification from "../components/ToastNotification.vue";
 import InfoComponent from "../components/InfoComponent.vue";
 
 export default {

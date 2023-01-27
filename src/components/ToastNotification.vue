@@ -1,3 +1,9 @@
+<script>
+export default {
+  props: ["message", "shuffle"],
+};
+</script>
+
 <template>
   <div class="toast toast-top toast-end pt-20 z-50">
     <div v-if="shuffle" class="alert alert-error">
@@ -12,21 +18,3 @@
     </div>
   </div>
 </template>
-
-<script>
-import { defineComponent } from "vue";
-
-export default defineComponent({
-  name: "ToastNotification",
-  props: {
-    message: {
-      type: String,
-      required: true,
-    },
-    shuffle: {
-      type: Boolean,
-      required: false,
-    },
-  },
-});
-</script>
