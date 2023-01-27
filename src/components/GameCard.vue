@@ -1,3 +1,9 @@
+<script>
+export default {
+  props: ["game"],
+};
+</script>
+
 <template>
   <div class="card bg-base-100 shadow-xl min-w-[75%] sm:min-w-[20%] max-w-md">
     <figure class="h-52 overflow-hidden !hidden sm:!flex">
@@ -14,18 +20,3 @@
     </div>
   </div>
 </template>
-
-<script>
-import { defineComponent } from "vue";
-import Game from "@/Game";
-
-export default defineComponent({
-  name: "GameCard",
-  props: {
-    game: {
-      type: Game,
-      required: true,
-    },
-  },
-});
-</script>

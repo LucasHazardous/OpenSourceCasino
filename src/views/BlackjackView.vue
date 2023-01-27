@@ -1,7 +1,7 @@
 <script>
 import BetSelectButton from "../components/BetSelectButton.vue";
 import BlackjackCardTable from "../components/BlackjackCardTable.vue";
-import ToastNotification from "@/components/ToastNotification.vue";
+import ToastNotification from "../components/ToastNotification.vue";
 
 export default {
   props: ["points"],
@@ -222,7 +222,9 @@ export default {
     <div
       class="flex flex-col sm:flex-row gap-5 w-full sm:w-2/3 h-auto justify-center transition-transform"
     >
-      <div class="flex flex-row flex-wrap sm:flex-col sm:w-1/3 justify-center items-center gap-5">
+      <div
+        class="flex flex-row flex-wrap sm:flex-col sm:w-1/3 justify-center items-center gap-5"
+      >
         <div class="flex flex-col items-center">
           <h2 class="text-[2em]">Blackjack</h2>
           <p id="lastReward" class="font-mono">Last reward: {{ lastReward }}</p>

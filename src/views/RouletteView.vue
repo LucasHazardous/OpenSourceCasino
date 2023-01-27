@@ -1,7 +1,8 @@
 <script>
 import BetSelectButton from "../components/BetSelectButton.vue";
 import Roulette from "../components/RouletteComponent.vue";
-import ToastNotification from "@/components/ToastNotification.vue";
+import ToastNotification from "../components/ToastNotification.vue";
+import InfoComponent from "../components/InfoComponent.vue";
 
 export default {
   props: ["points"],
@@ -20,11 +21,10 @@ export default {
     BetSelectButton,
     Roulette,
     ToastNotification,
+    InfoComponent,
   },
   methods: {
     spinRoulette() {
-      if (this.spinning) return;
-
       const placedBet = this.$refs.betSelect.$data.value;
 
       if (this.$props.points - placedBet < 0) {
@@ -116,55 +116,21 @@ export default {
           ref="colorSelect"
         ></BetSelectButton>
       </div>
-      <div tabindex="0" class="collapse rounded-box">
-        <div class="collapse-title text-2xl font-medium text-center p-5">
-          Loot chances
-        </div>
-        <div class="collapse-content">
-          <div class="stats stats-vertical lg:stats-horizontal shadow">
-            <div class="stat">
-              <div class="stat-figure text-secondary">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  class="inline-block w-8 h-8 stroke-current stroke-primary"
-                >
-                  <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="2"
-                    d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
-                  ></path>
-                </svg>
-              </div>
-              <div class="stat-title">Light-blue</div>
-              <div class="stat-value">50%</div>
-              <div class="stat-desc">Reward: Original bet x 1.5</div>
-            </div>
-            <div class="stat">
-              <div class="stat-figure text-secondary">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  class="inline-block w-8 h-8 stroke-current stroke-primary"
-                >
-                  <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="2"
-                    d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
-                  ></path>
-                </svg>
-              </div>
-              <div class="stat-title">Dark-blue</div>
-              <div class="stat-value">50%</div>
-              <div class="stat-desc">Reward: Original bet x 1.5</div>
-            </div>
-          </div>
-        </div>
-      </div>
+
+      <InfoComponent
+        :elements="[
+          {
+            title: 'Light-blue',
+            value: '50%',
+            desc: 'Reward: Original bet x 1.5',
+          },
+          {
+            title: 'Dark-blue',
+            value: '50%',
+            desc: 'Reward: Original bet x 1.5',
+          },
+        ]"
+      ></InfoComponent>
     </div>
   </main>
 </template>
