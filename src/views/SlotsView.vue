@@ -29,8 +29,6 @@ export default {
   methods: {
     spinSlots(slotCounter, rewards = []) {
       if (slotCounter === 1) {
-        if (this.spinning) return;
-
         this.lastPlacedBet = Number(this.$refs.betSelect.$data.value);
         if (this.$props.points - this.lastPlacedBet < 0) {
           this.autospinning = false;

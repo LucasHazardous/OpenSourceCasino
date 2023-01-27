@@ -25,8 +25,6 @@ export default {
   },
   methods: {
     spinRoulette() {
-      if (this.spinning) return;
-
       const placedBet = this.$refs.betSelect.$data.value;
 
       if (this.$props.points - placedBet < 0) {
