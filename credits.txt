@@ -8,3 +8,6 @@ Images:
 https://unsplash.com/photos/wPXEQz40f8s
 https://www.pexels.com/pl-pl/zdjecie/kasyno-liczby-gra-wewnatrz-6664249/
 https://www.pexels.com/pl-pl/zdjecie/zblizenie-kart-do-gry-1796794/
+
+Font:
+https://fonts.google.com/specimen/Montserrat

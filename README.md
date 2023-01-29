@@ -1,18 +1,32 @@
-# Welcome to **Open Source Casino**!
+<img align="left" height="64" src="./public/logo.png">
 
-> A place where you can enjoy playing casino games with cyberdonuts (_fake money_)!
+# <a href="https://lucashazardous.github.io/OpenSourceCasino" target="_blank">Open Source Casino</a>
 
-**I strongly recommend that you never play in a casino with real money!**
+![Latest version](https://img.shields.io/github/package-json/v/LucasHazardous/OpenSourceCasino?color=00A3A3&filename=package.json&style=for-the-badge)
 
-To start playing any game mode simply navigate to the [website](https://lucashazardous.github.io/OpenSourceCasino), choose game and have fun!
+## Motivation
 
-### This doesn't make any sense
+Stakes and rewards in this casino are fake. This casino will never give the excitement caused by chasing meaningful rewards. That is not the goal though and will never be. The only excitement that is available here is the one caused by satisfying, easy and intuitive gameplay. This project also gives you an insight why you should never think of a casino as a way to make money.
 
-Why would you want to play if you know that the rewards are fake? I'm aware of that, this casino will never give the excitement caused by chasing meaningful rewards. That is not the goal though and will never be. The only excitement that you can get here is the one caused by satisfying, easy and intuitive gameplay. It also gives you an insight why you **should never think of a casino as a way to make money**.
+## Retrieving the currency
 
-### My cyberdonuts are gone, what now?
-
-There is a certain trick to get them back. Amount of your cyberdonuts is stored in local storage in your browser. So to get them back you can either:
+Amount of your cyberdonuts is stored in local storage in your browser. To retrieve them:
 
 - head over to the developer console in your browser and in **Application** tab, under **Local Storage** section select the website url and modify the **points** value
 - clear browsing data in your browser's settings
+
+---
+
+## Development mode
+
+Clone this repository, install npm modules:
+
+```
+npm i
+```
+
+and run:
+
+```
+npm run dev
+```
