@@ -1,6 +1,6 @@
 <img align="left" height="64" src="./public/logo.png">
 
-# [**Open Source Casino**](https://lucashazardous.github.io/OpenSourceCasino)
+# <a href="https://lucashazardous.github.io/OpenSourceCasino" target="_blank">Open Source Casino</a>
 
 ![Latest version](https://img.shields.io/github/package-json/v/LucasHazardous/OpenSourceCasino?color=00A3A3&filename=package.json&style=for-the-badge)
 
