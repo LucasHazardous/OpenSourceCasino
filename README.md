@@ -1,12 +1,8 @@
 <img align="left" height="64" src="./public/logo.png">
 
-# &nbsp;**Open Source Casino**
+# [**Open Source Casino**](https://lucashazardous.github.io/OpenSourceCasino)
 
 ![Latest version](https://img.shields.io/github/package-json/v/LucasHazardous/OpenSourceCasino?color=00A3A3&filename=package.json&style=for-the-badge)
-
-<sub><sup>_Playing in a *real* casino can lead to serious money loss._</sup></sub>
-
-> To play navigate to the [website](https://lucashazardous.github.io/OpenSourceCasino).
 
 ## Motivation
 
