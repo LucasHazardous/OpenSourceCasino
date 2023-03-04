@@ -6,10 +6,13 @@
     "build": "vite build",
     "preview": "vite preview --port 4173",
     "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs --fix --ignore-path .gitignore",
-    "prepare": "husky install"
+    "prepare": "husky install",
+    "test": "vitest --dom",
+    "coverage": "vitest run --coverage"
   },
   "dependencies": {
     "@tailwindcss/typography": "^0.5.8",
+    "@vitejs/plugin-vue": "^3.2.0",
     "daisyui": "^2.38.1",
     "vue": "^3.2.38",
     "vue-router": "^4.1.5"
@@ -17,16 +20,19 @@
   "devDependencies": {
     "@rushstack/eslint-patch": "^1.1.4",
     "@tailwindcss/forms": "^0.5.3",
-    "@vitejs/plugin-vue": "^3.0.3",
+    "@vitest/coverage-c8": "^0.29.2",
     "@vue/eslint-config-prettier": "^7.0.0",
+    "@vue/test-utils": "^2.3.0",
     "autoprefixer": "^10.4.13",
     "eslint": "^8.22.0",
     "eslint-plugin-vue": "^9.3.0",
+    "happy-dom": "^8.9.0",
     "husky": "^8.0.2",
     "postcss": "^8.4.18",
     "prettier": "^2.7.1",
     "tailwindcss": "^3.2.2",
-    "vite": "^3.0.9"
+    "vite": "^3.0.9",
+    "vitest": "^0.29.2"
   },
   "lint-staged": {
     "*.{js,yml,md,json,vue,css}": "prettier --write"
