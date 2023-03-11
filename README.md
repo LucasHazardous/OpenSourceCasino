@@ -17,16 +17,29 @@ Amount of your cyberdonuts is stored in local storage in your browser. To retrie
 
 ---
 
-## Development mode
+## Configured scripts
 
-Clone this repository, install npm modules:
+Before running any script install dependencies and configure [Husky Git hook](https://typicode.github.io/husky/#/):
 
 ```
 npm i
+npm run prepare
 ```
 
-and run:
+Local development mode:
 
 ```
 npm run dev
+```
+
+Running tests:
+
+```
+npm run test
+```
+
+Get test coverage:
+
+```
+npm run coverage
 ```
