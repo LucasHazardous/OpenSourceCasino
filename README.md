@@ -2,11 +2,7 @@
 
 # Open Source Casino
 
-![Latest version](https://img.shields.io/github/package-json/v/LucasHazardous/OpenSourceCasino?color=FFCF40&style=flat-square)
-
-![License](https://img.shields.io/github/license/LucasHazardous/OpenSourceCasino?color=36D399&style=flat-square)
-
-![Repo size](https://img.shields.io/github/repo-size/LucasHazardous/OpenSourceCasino?color=6184D8&style=flat-square)
+![Latest version](https://img.shields.io/github/package-json/v/LucasHazardous/OpenSourceCasino?color=FFCF40&style=flat-square) ![License](https://img.shields.io/github/license/LucasHazardous/OpenSourceCasino?color=36D399&style=flat-square) ![Repo size](https://img.shields.io/github/repo-size/LucasHazardous/OpenSourceCasino?color=6184D8&style=flat-square) ![Vulnerabilities](https://img.shields.io/snyk/vulnerabilities/github/LucasHazardous/OpenSourceCasino?color=F87272&style=flat-square)
 
 ## Motivation
 
