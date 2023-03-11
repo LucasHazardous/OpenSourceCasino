@@ -2,7 +2,7 @@
 
 # Open Source Casino
 
-![Latest version](https://img.shields.io/github/package-json/v/LucasHazardous/OpenSourceCasino?color=00A3A3&filename=package.json&style=for-the-badge)
+![Latest version](https://img.shields.io/github/package-json/v/LucasHazardous/OpenSourceCasino?color=FFCF40&style=flat-square)
 
 ## Motivation
 
