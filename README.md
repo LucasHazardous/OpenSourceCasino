@@ -4,6 +4,10 @@
 
 ![Latest version](https://img.shields.io/github/package-json/v/LucasHazardous/OpenSourceCasino?color=FFCF40&style=flat-square)
 
+![License](https://img.shields.io/github/license/LucasHazardous/OpenSourceCasino?color=36D399&style=flat-square)
+
+![Repo size](https://img.shields.io/github/repo-size/LucasHazardous/OpenSourceCasino?color=6184D8&style=flat-square)
+
 ## Motivation
 
 Stakes and rewards in this casino are fake. This casino will never give the excitement caused by chasing meaningful rewards. That is not the goal though and will never be. The only excitement that is available here is the one caused by satisfying, easy and intuitive gameplay. This project also gives you an insight why you should never think of a casino as a way to make money.
