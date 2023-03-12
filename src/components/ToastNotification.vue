@@ -6,7 +6,7 @@ export default {
 
 <template>
   <div class="toast toast-top toast-end pt-20 z-50">
-    <div v-if="shuffle" class="alert alert-error">
+    <div v-if="shuffle" class="alert alert-warning">
       <div>
         <span>Shuffling discarded cards back to the deck.</span>
       </div>

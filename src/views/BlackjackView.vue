@@ -85,11 +85,9 @@ export default {
   },
   methods: {
     startGame() {
-      if (this.points - this.selectedBet < 0) return;
-
       this.selectedBet = Number(this.$refs.betSelect.$data.value);
-      this.enableButtons = true;
       if (this.points - this.selectedBet < 0) return;
+      this.enableButtons = true;
 
       this.$emit("changePoints", -this.selectedBet);
       this.playing = true;
